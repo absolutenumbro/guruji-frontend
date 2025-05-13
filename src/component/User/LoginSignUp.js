@@ -67,13 +67,15 @@ const LoginSignUp = () => {
   const registerSubmit = (e) => {
     e.preventDefault();
 
-    const myForm = new FormData();
+    // Create user data object
+    const userData = {
+      name: name,
+      email: email,
+      password: password,
+      avatar: avatar
+    };
 
-    myForm.set("name", name);
-    myForm.set("email", email);
-    myForm.set("password", password);
-    myForm.set("avatar", avatar);
-    dispatch(register(myForm));
+    dispatch(register(userData));
   };
 
   const registerDataChange = (e) => {
