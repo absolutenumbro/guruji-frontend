@@ -67,36 +67,47 @@ export const register = (userData) => async (dispatch) => {
   try {
     dispatch({ type: REGISTER_USER_REQUEST });
 
+    // Validate required fields
+    if (!userData.name || !userData.email || !userData.password) {
+      dispatch({
+        type: REGISTER_USER_FAIL,
+        payload: "Please provide all required fields"
+      });
+      return;
+    }
+
     const config = { 
       headers: { 
-        "Content-Type": "multipart/form-data" 
+        "Content-Type": "application/json" 
       } 
     };
 
-    // Create FormData object
-    const formData = new FormData();
-    formData.append("name", userData.name);
-    formData.append("email", userData.email);
-    formData.append("password", userData.password);
-    
-    // If avatar is a File object
-    if (userData.avatar instanceof File) {
-      formData.append("avatar", userData.avatar);
-    } 
-    // If avatar is a base64 string
-    else if (typeof userData.avatar === 'string' && userData.avatar.startsWith('data:')) {
-      formData.append("avatar", userData.avatar);
+    // Create request body with required fields
+    const requestBody = {
+      name: userData.name.trim(),
+      email: userData.email.trim(),
+      password: userData.password
+    };
+
+    // Only add avatar if it exists and is not empty
+    if (userData.avatar && userData.avatar !== "/Profile.png") {
+      requestBody.avatar = userData.avatar;
     }
 
-    const { data } = await api.post(`/api/v1/register`, formData, config);
+    console.log('Sending registration request with data:', requestBody);
+
+    const { data } = await api.post(`/api/v1/register`, requestBody, config);
 
     // Store token in localStorage
     if (data.token) {
       localStorage.setItem('token', data.token);
+      localStorage.setItem('role', data.user.role);
+      localStorage.setItem('isAuthenticated', true);
     }
 
     dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user });
   } catch (error) {
+    console.error('Registration error:', error);
     dispatch({
       type: REGISTER_USER_FAIL,
       payload: error.response?.data?.message || "Registration failed"
