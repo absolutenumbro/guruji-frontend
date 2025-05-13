@@ -83,7 +83,7 @@ export const createProduct = (productData) => async (dispatch) => {
     dispatch({ type: NEW_PRODUCT_REQUEST });
 
     const config = {
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "multipart/form-data" },
     };
 
     const { data } = await api.post(
@@ -94,12 +94,13 @@ export const createProduct = (productData) => async (dispatch) => {
 
     dispatch({
       type: NEW_PRODUCT_SUCCESS,
-      payload: data,
+      payload: data
     });
   } catch (error) {
+    console.error('Product creation error:', error);
     dispatch({
       type: NEW_PRODUCT_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || "Error creating product"
     });
   }
 };
