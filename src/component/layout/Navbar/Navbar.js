@@ -10,9 +10,11 @@ import "./Navbar.css";
 const Navbar = () => {
 const [menuOpen, setMenuOpen] = useState(false);
 const token = localStorage.getItem("token");
+const role = localStorage.getItem("role");
+const isAuthenticated = localStorage.getItem("isAuthenticated");
 const [dropdownOpen, setDropdownOpen] = useState(false);
 
-const { isAuthenticated, user } = useSelector((state) => state.user);
+const {  user } = useSelector((state) => state.user);
 const dispatch = useDispatch();
 const alert = useAlert();
 const navigate = useNavigate();     
@@ -21,6 +23,8 @@ const handleMenuToggle = () => setMenuOpen(!menuOpen);
 const handleDropdownToggle = () => setDropdownOpen(!dropdownOpen);
 const handleDropdownClose = () => setDropdownOpen(false);
 console.log(token);
+
+
 const handleLogout = () => {
     dispatch(logout());
     alert.success("Logout Successfully");

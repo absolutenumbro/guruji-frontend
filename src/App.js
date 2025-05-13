@@ -53,28 +53,28 @@ import PrivacyPolicy from "./pages/policies/PrivacyPolicy";
 import RefundPolicy from "./pages/policies/RefundPolicy";
 
 // Create a wrapper component to handle protected routes
-const ProtectedRouteWrapper = ({ children, isAdmin }) => {
-  const location = useLocation();
-  const { isAuthenticated, user } = useSelector((state) => state.user);
-  const token = localStorage.getItem('token');
+// const ProtectedRouteWrapper = ({ children, isAdmin }) => {
+//   const location = useLocation();
+//   const { isAuthenticated, user } = useSelector((state) => state.user);
+//   const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    // Only load user data if we have a token and we're not authenticated yet
-    if (token && !isAuthenticated) {
-      store.dispatch(loadUser());
-    }
-  }, []); // Remove dependencies to prevent infinite loop
+//   useEffect(() => {
+//     // Only load user data if we have a token and we're not authenticated yet
+//     if (token && !isAuthenticated) {
+//       store.dispatch(loadUser());
+//     }
+//   }, []); // Remove dependencies to prevent infinite loop
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" />;
-  }
+//   if (!isAuthenticated) {
+//     return <Navigate to="/login" />;
+//   }
 
-  if (isAdmin && user.role !== "admin") {
-    return <Navigate to="/login" />;
-  }
+//   if (isAdmin && user.role !== "admin") {
+//     return <Navigate to="/login" />;
+//   }
 
-  return children;
-};
+//   return children;
+// };
 
 function App() {
   // const [stripeApiKey, setStripeApiKey] = useState("");
@@ -115,19 +115,19 @@ function App() {
         <Route exact path="/refund-policy" element={<RefundPolicy />} />
 
         <Route exact path="/account" element={
-          <ProtectedRouteWrapper>
+          <ProtectedRoute>
             <Profile />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/me/update" element={
-          <ProtectedRouteWrapper>
+          <ProtectedRoute>
             <UpdateProfile />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/password/update" element={
-          <ProtectedRouteWrapper>
+          <ProtectedRoute>
             <UpdatePassword />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
 
         <Route exact path="/password/forgot" element={<ForgotPassword />} />
@@ -137,90 +137,90 @@ function App() {
 
         <Route exact path="/cart" element={<Cart />} />
         <Route exact path="/shipping" element={
-          <ProtectedRouteWrapper>
+          <ProtectedRoute>
             <Shipping />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/success" element={
-          <ProtectedRouteWrapper>
+          <ProtectedRoute>
             <OrderSuccess />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/orders" element={
-          <ProtectedRouteWrapper>
+          <ProtectedRoute>
             <MyOrders />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/order/:id" element={
-          <ProtectedRouteWrapper>
+          <ProtectedRoute>
             <OrderDetails />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
 
         <Route exact path="/admin/dashboard" element={
-          <ProtectedRouteWrapper isAdmin={true}>
+          <ProtectedRoute isAdmin={true}>
             <Dashboard />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/admin/products" element={
-          <ProtectedRouteWrapper isAdmin={true}>
+          <ProtectedRoute isAdmin={true}>
             <ProductList />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/admin/product" element={
-          <ProtectedRouteWrapper isAdmin={true}>
+          <ProtectedRoute isAdmin={true}>
             <NewProduct />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/admin/product/:id" element={
-          <ProtectedRouteWrapper isAdmin={true}>
+          <ProtectedRoute isAdmin={true}>
             <UpdateProduct />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/admin/orders" element={
-          <ProtectedRouteWrapper isAdmin={true}>
+          <ProtectedRoute isAdmin={true}>
             <OrderList />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/admin/order/:id" element={
-          <ProtectedRouteWrapper isAdmin={true}>
+          <ProtectedRoute isAdmin={true}>
             <ProcessOrder />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/admin/users" element={
-          <ProtectedRouteWrapper isAdmin={true}>
+          <ProtectedRoute isAdmin={true}>
             <UsersList />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/admin/user/:id" element={
-          <ProtectedRouteWrapper isAdmin={true}>
+          <ProtectedRoute isAdmin={true}>
             <UpdateUser />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/admin/reviews" element={
-          <ProtectedRouteWrapper isAdmin={true}>
+          <ProtectedRoute isAdmin={true}>
             <ProductReviews />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/admin/services" element={
-          <ProtectedRouteWrapper isAdmin={true}>
+          <ProtectedRoute isAdmin={true}>
             <ServiceList />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/admin/service" element={
-          <ProtectedRouteWrapper isAdmin={true}>
+          <ProtectedRoute isAdmin={true}>
             <NewService />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/admin/service/:id" element={
-          <ProtectedRouteWrapper isAdmin={true}>
+          <ProtectedRoute isAdmin={true}>
             <UpdateService />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
         <Route exact path="/admin/messages" element={
-          <ProtectedRouteWrapper isAdmin={true}>
+          <ProtectedRoute isAdmin={true}>
             <ContactList />
-          </ProtectedRouteWrapper>
+          </ProtectedRoute>
         } />
 
         <Route path="*" element={window.location.pathname === "/process/payment" ? null : <NotFound />} />

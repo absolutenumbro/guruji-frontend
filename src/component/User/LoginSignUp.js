@@ -20,7 +20,6 @@ const LoginSignUp = () => {
     (state) => state.user
   );
 
-  console.log('LoginSignUp state:', { error, loading, isAuthenticated });
 
   const loginTab = useRef(null);
   const registerTab = useRef(null);
@@ -40,7 +39,6 @@ const LoginSignUp = () => {
   const [avatar, setAvatar] = useState("/Profile.png");
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
 
-  const redirect = location.search ? location.search.split("=")[1] : "/";
 
   useEffect(() => {
     if (error) {
@@ -49,9 +47,16 @@ const LoginSignUp = () => {
     }
 
     if (isAuthenticated) {
-      navigate(redirect);
+      setTimeout(() => {
+        const role = localStorage.getItem("role");
+        if (role == "admin") {
+          navigate("/admin/dashboard");
+        } else {
+          navigate("/account");
+        }
+      }, 500);
     }
-  }, [dispatch, error, alert, isAuthenticated, navigate, redirect]);
+  }, [dispatch, error, alert, isAuthenticated, navigate]);
 
   const loginSubmit = (e) => {
     e.preventDefault();

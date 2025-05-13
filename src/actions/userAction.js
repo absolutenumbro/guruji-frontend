@@ -50,8 +50,10 @@ export const login = (email, password) => async (dispatch) => {
     );
 
     // Store token in localStorage as backup
-    if (data.token) {
+    if (data) {
       localStorage.setItem('token', data.token);
+      localStorage.setItem('role', data.user.role);
+      localStorage.setItem('isAuthenticated', true);
     }
 
     dispatch({ type: LOGIN_SUCCESS, payload: data.user });
