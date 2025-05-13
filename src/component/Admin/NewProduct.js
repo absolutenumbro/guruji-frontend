@@ -45,12 +45,20 @@ const NewProduct = () => {
 
     const myForm = new FormData();
     myForm.set("name", name);
-    myForm.set("price", price);
+    myForm.set("price", Number(price));
     myForm.set("description", description);
-    myForm.set("Stock", Stock);
+    myForm.set("Stock", Number(Stock));
 
     images.forEach((image) => {
       myForm.append("images", image);
+    });
+
+    console.log('Submitting product data:', {
+      name,
+      price: Number(price),
+      description,
+      Stock: Number(Stock),
+      images
     });
 
     dispatch(createProduct(myForm));
