@@ -15,7 +15,7 @@ style={{ maxHeight: '450px', width: '100%', objectFit: 'cover' }}
           />
         </div>
         <div className="about-content">
-          <h3>About Abhay Kumar Sharma</h3>
+          <h3>Abhay Kumar Sharma</h3>
           <h2>Blending Spiritual Insight with Practical Life Coaching</h2>
           <p>
             I’m Abhay Kumar Sharma — Numerologist, Life Coach, Motivational
