@@ -2,26 +2,34 @@ import React, { Fragment, useEffect } from "react";
 import "./orderDetails.css";
 import { useSelector, useDispatch } from "react-redux";
 import MetaData from "../layout/MetaData";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import { getOrderDetails, clearErrors } from "../../actions/orderAction";
 import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
 
-const OrderDetails = ({ match }) => {
+const OrderDetails = () => {
+  const { id } = useParams();
   const { order, error, loading } = useSelector((state) => state.orderDetails);
-
+  const { user, isAuthenticated } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const alert = useAlert();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
 
-    dispatch(getOrderDetails(match.params.id));
-  }, [dispatch, alert, error, match.params.id]);
+    dispatch(getOrderDetails(id));
+  }, [dispatch, alert, error, id, isAuthenticated, navigate]);
+
   return (
     <Fragment>
       {loading ? (
@@ -38,18 +46,16 @@ const OrderDetails = ({ match }) => {
               <div className="orderDetailsContainerBox">
                 <div>
                   <p>Name:</p>
-                  <span>{order.user && order.user.name}</span>
+                  <span>{order?.user?.name || user?.name}</span>
                 </div>
                 <div>
                   <p>Phone:</p>
-                  <span>
-                    {order.shippingInfo && order.shippingInfo.phoneNo}
-                  </span>
+                  <span>{order?.shippingInfo?.phoneNo}</span>
                 </div>
                 <div>
                   <p>Address:</p>
                   <span>
-                    {order.shippingInfo &&
+                    {order?.shippingInfo &&
                       `${order.shippingInfo.address}, ${order.shippingInfo.city}, ${order.shippingInfo.state}, ${order.shippingInfo.pinCode}, ${order.shippingInfo.country}`}
                   </span>
                 </div>
@@ -59,14 +65,12 @@ const OrderDetails = ({ match }) => {
                 <div>
                   <p
                     className={
-                      order.paymentInfo &&
-                      order.paymentInfo.status === "succeeded"
+                      order?.paymentInfo?.status === "succeeded"
                         ? "greenColor"
                         : "redColor"
                     }
                   >
-                    {order.paymentInfo &&
-                    order.paymentInfo.status === "succeeded"
+                    {order?.paymentInfo?.status === "succeeded"
                       ? "PAID"
                       : "NOT PAID"}
                   </p>
@@ -74,7 +78,7 @@ const OrderDetails = ({ match }) => {
 
                 <div>
                   <p>Amount:</p>
-                  <span>{order.totalPrice && order.totalPrice}</span>
+                  <span>{order?.totalPrice}</span>
                 </div>
               </div>
 
@@ -83,12 +87,12 @@ const OrderDetails = ({ match }) => {
                 <div>
                   <p
                     className={
-                      order.orderStatus && order.orderStatus === "Delivered"
+                      order?.orderStatus === "Delivered"
                         ? "greenColor"
                         : "redColor"
                     }
                   >
-                    {order.orderStatus && order.orderStatus}
+                    {order?.orderStatus}
                   </p>
                 </div>
               </div>
@@ -97,13 +101,11 @@ const OrderDetails = ({ match }) => {
             <div className="orderDetailsCartItems">
               <Typography>Order Items:</Typography>
               <div className="orderDetailsCartItemsContainer">
-                {order.orderItems &&
+                {order?.orderItems &&
                   order.orderItems.map((item) => (
                     <div key={item.product}>
                       <img src={item.image} alt="Product" />
-                      <Link to={`/product/${item.product}`}>
-                        {item.name}
-                      </Link>{" "}
+                      <Link to={`/product/${item.product}`}>{item.name}</Link>{" "}
                       <span>
                         {item.quantity} X ₹{item.price} ={" "}
                         <b>₹{item.price * item.quantity}</b>

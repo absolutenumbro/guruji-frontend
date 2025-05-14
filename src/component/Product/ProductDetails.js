@@ -67,6 +67,7 @@ const ProductDetails = () => {
 
   const addToCartHandler = () => {
     if (!user) {
+      alert.error("Please login to add items to cart");
       navigate("/login");
       return;
     }
@@ -147,7 +148,21 @@ const ProductDetails = () => {
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
                     <button onClick={decreaseQuantity}>-</button>
-                    <input readOnly type="number" value={quantity} />
+
+                    <input 
+                      readOnly 
+                      type="number" 
+                      value={quantity} 
+                      style={{ 
+                        width: '50px', 
+                        textAlign: 'center',
+                        margin: '0 10px',
+                        padding: '5px',
+                        border: '1px solid #ddd',
+                        borderRadius: '4px'
+                      }} 
+                    />
+                    
                     <button onClick={increaseQuantity}>+</button>
                   </div>
                   <button

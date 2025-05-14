@@ -26,12 +26,18 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Handle 401 errors silently
-    if (error.response && error.response.status === 401) {
-      // Clear token if it exists
-      localStorage.removeItem('token');
-      // Don't reject the promise, just return a resolved promise with null
-      return Promise.resolve({ data: null });
+    if (error.response) {
+      // Handle 401 errors
+      if (error.response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        localStorage.removeItem('isAuthenticated');
+        window.location.href = '/login';
+      }
+      // Handle 500 errors
+      if (error.response.status === 500) {
+        console.error('Server Error:', error.response.data);
+      }
     }
     return Promise.reject(error);
   }

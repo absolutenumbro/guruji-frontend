@@ -5,27 +5,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { addItemsToCart, removeItemsFromCart } from "../../actions/cartAction";
 import { Typography } from "@material-ui/core";
 import RemoveShoppingCartIcon from "@material-ui/icons/RemoveShoppingCart";
-import { Link, useNavigate } from "react-router-dom"; // ✅ import useNavigate
+import { Link, useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate(); // ✅ useNavigate instead of history
+  const navigate = useNavigate();
 
   const { cartItems } = useSelector((state) => state.cart);
 
   const increaseQuantity = (id, quantity, stock) => {
     const newQty = quantity + 1;
-    if (stock <= quantity) {
-      return;
-    }
+    if (stock <= quantity) return;
     dispatch(addItemsToCart(id, newQty));
   };
 
   const decreaseQuantity = (id, quantity) => {
     const newQty = quantity - 1;
-    if (1 >= quantity) {
-      return;
-    }
+    if (quantity <= 1) return;
     dispatch(addItemsToCart(id, newQty));
   };
 
@@ -60,28 +56,35 @@ const Cart = () => {
                   <CartItemCard item={item} deleteCartItems={deleteCartItems} />
                   <div className="cartInput">
                     <button
-                      onClick={() =>
-                        decreaseQuantity(item.product, item.quantity)
-                      }
+                      onClick={() => decreaseQuantity(item.product, item.quantity)}
                     >
                       -
                     </button>
-                    <input type="number" value={item.quantity} readOnly />
+                    <input
+                      type="number"
+                      value={item.quantity}
+                      readOnly
+                      style={{
+                        width: "50px",
+                        textAlign: "center",
+                        margin: "0 10px",
+                        padding: "5px",
+                        border: "1px solid #ddd",
+                        borderRadius: "4px",
+                        color: "black",
+                        fontSize: "16px",
+                        backgroundColor: "white"
+                      }}
+                    />
                     <button
                       onClick={() =>
-                        increaseQuantity(
-                          item.product,
-                          item.quantity,
-                          item.stock
-                        )
+                        increaseQuantity(item.product, item.quantity, item.stock)
                       }
                     >
                       +
                     </button>
                   </div>
-                  <p className="cartSubtotal">{`₹${
-                    item.price * item.quantity
-                  }`}</p>
+                  <p className="cartSubtotal">{`₹${item.price * item.quantity}`}</p>
                 </div>
               ))}
 

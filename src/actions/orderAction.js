@@ -32,13 +32,14 @@ export const createOrder = (order) => async (dispatch) => {
         "Content-Type": "application/json",
       },
     };
+
     const { data } = await api.post("/api/v1/order/new", order, config);
 
     dispatch({ type: CREATE_ORDER_SUCCESS, payload: data });
   } catch (error) {
     dispatch({
       type: CREATE_ORDER_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || "Error creating order",
     });
   }
 };
@@ -127,7 +128,7 @@ export const getOrderDetails = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: ORDER_DETAILS_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || "Error fetching order details",
     });
   }
 };

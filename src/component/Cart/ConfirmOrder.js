@@ -1,14 +1,31 @@
-import React, { Fragment } from "react";
-import CheckoutSteps from "../Cart/CheckoutSteps";
-import { useSelector } from "react-redux";
-import MetaData from "../layout/MetaData";
+import React, { Fragment, useEffect } from "react";
 import "./ConfirmOrder.css";
-import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import MetaData from "../layout/MetaData";
+import CheckoutSteps from "./CheckoutSteps";
 import { Typography } from "@material-ui/core";
+import { useAlert } from "react-alert";
+import axios from "axios";
+import { createOrder, clearErrors } from "../../actions/orderAction";
 
-const ConfirmOrder = ({ history }) => {
+const ConfirmOrder = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const alert = useAlert();
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
-  const { user } = useSelector((state) => state.user);
+  const { isAuthenticated } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate('/login');
+      return;
+    }
+    if (!shippingInfo || !cartItems || cartItems.length === 0) {
+      navigate('/cart');
+      return;
+    }
+  }, [isAuthenticated, shippingInfo, cartItems, navigate]);
 
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.quantity * item.price,
@@ -33,7 +50,7 @@ const ConfirmOrder = ({ history }) => {
 
     sessionStorage.setItem("orderInfo", JSON.stringify(data));
 
-    history.push("/process/payment");
+    navigate("/process/payment");
   };
 
   return (
@@ -47,11 +64,11 @@ const ConfirmOrder = ({ history }) => {
             <div className="confirmshippingAreaBox">
               <div>
                 <p>Name:</p>
-                <span>{user.name}</span>
+                <span>{shippingInfo?.name}</span>
               </div>
               <div>
                 <p>Phone:</p>
-                <span>{shippingInfo.phoneNo}</span>
+                <span>{shippingInfo?.phoneNo}</span>
               </div>
               <div>
                 <p>Address:</p>
@@ -66,13 +83,13 @@ const ConfirmOrder = ({ history }) => {
                 cartItems.map((item) => (
                   <div key={item.product}>
                     <img src={item.image} alt="Product" />
-                    <Link to={`/product/${item.product}`}>
-                      {item.name}
-                    </Link>{" "}
-                    <span>
-                      {item.quantity} X ₹{item.price} ={" "}
-                      <b>₹{item.price * item.quantity}</b>
-                    </span>
+                    <div>
+                      <p>{item.name}</p>
+                      <span>
+                        {item.quantity} X ₹{item.price} ={" "}
+                        <b>₹{item.price * item.quantity}</b>
+                      </span>
+                    </div>
                   </div>
                 ))}
             </div>
