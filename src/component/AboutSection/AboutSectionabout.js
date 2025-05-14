@@ -11,7 +11,7 @@ const AboutSection2 = () => {
           <img src={aboutImage} alt="About Abhay Kumar Sharma" />
         </div>
         <div className="about-content">
-          <h3>About Abhay Kumar Sharma</h3>
+          <h3>Abhay Kumar Sharma</h3>
           <h2>Numerologist | Life Coach | Motivational Speaker | Spiritual Guide</h2>
           <p>
             Namaste 🙏, I am Abhay Kumar Sharma, a passionate Numerologist, Life Coach, Motivational Speaker, and spiritual seeker. My journey blends a rational career in business and IT with a deep spiritual path, helping people find alignment in their personal and professional lives.
