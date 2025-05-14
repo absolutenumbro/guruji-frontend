@@ -1,6 +1,6 @@
 import React from 'react';
 import './AboutSection.css';
-import aboutImage from '../../images/aboutcopy.JPG';
+import aboutImage from '../../images/aboutcopy111.jpg';
 import { Link } from 'react-router-dom';
 
 const AboutSection = () => {
@@ -11,7 +11,7 @@ const AboutSection = () => {
           <img
             src={aboutImage}
             alt="About Abhay Kumar Sharma"
-style={{ maxHeight: '500px', width: '100%', objectFit: 'cover' }}
+style={{ maxHeight: '450px', width: '100%', objectFit: 'cover' }}
           />
         </div>
         <div className="about-content">
