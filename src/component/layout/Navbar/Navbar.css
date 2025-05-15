@@ -183,6 +183,8 @@
     .navbar-links {
         gap: 1rem;
     }
+
+    
     }
 
     @media (max-width: 768px) {
@@ -253,6 +255,15 @@
         background: #f8f9fa;
         color: #007bff;
     }
+    .event-button {
+        background: none;
+        border: none;
+        color: #1e1e6a;
+        font-size: 115%;
+        font-weight: 650;
+      }
+    
+        
     }
 
     @media (max-width: 480px) {
@@ -270,6 +281,11 @@
        margin-top: -22px;
        margin-left: 10px;
     
+       background: none;
+       border: none;
+       color: #1e1e6a;
+       font-size: 130%;
+       font-weight: 500;
     
         }
     } 
