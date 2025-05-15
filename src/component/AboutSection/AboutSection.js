@@ -11,7 +11,7 @@ const AboutSection = () => {
           <img
             src={aboutImage}
             alt="About Abhay Kumar Sharma"
-style={{ maxHeight: '450px', width: '100%'}}
+style={{ maxHeight: '480px', width: '100%'}}
           />
         </div>
         <div className="about-content">
