@@ -12,6 +12,58 @@
     z-index: 100;
     }
 
+    .modal-close-btn {
+        margin-top: 20px;
+        background-color: #1e1e6a;
+        color: rgb(255, 255, 255);
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.2s;
+      }
+      
+      .modal-close-btn:hover {
+        background-color: #007bff;
+      }
+      
+
+    .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 999;
+      }
+      
+      .modal-content {
+        background: white;
+        padding: 30px 50px;
+        border-radius: 8px;
+        text-align: center;
+        position: relative;         
+      }
+      
+      .event-button {
+        background: none;
+        border: none;
+        color: #1E1E6A;
+        font-size: 1rem;
+        cursor: pointer;
+        font-weight: 550;
+      }
+      
+      .event-button:hover {
+        color: #1e1e6a;
+      }
+      
+
 
     /* Hide mobile auth section on desktop */
 @media (min-width: 769px) {
