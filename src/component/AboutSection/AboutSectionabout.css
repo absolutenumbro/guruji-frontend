@@ -14,7 +14,7 @@
   }
   
   .about-image {
-    flex: 1;
+    flex: 1;  
     min-width: 300px;
     animation: fadeInLeft 1s ease;
   }
