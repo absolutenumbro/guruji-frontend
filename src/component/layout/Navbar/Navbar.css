@@ -171,6 +171,8 @@
     object-fit: cover;
     border: 2px solid #f7b801;
     background: #fff;
+
+
     }
 
     /* Mobile Styles */
@@ -220,6 +222,7 @@
     .navbar-profile-mobile {
         position: relative;
         display: inline-block;
+        
     }
     .navbar-profile-mobile span {
         font-size: 1.5rem;
@@ -261,5 +264,12 @@
     }
     .navbar-links {
         padding: 1rem 1rem 1.5rem 1rem;
-    }     
+    }  
+    
+    .navbar-avatar {
+       margin-top: -22px;
+       margin-left: 10px;
+    
+    
+        }
     } 
