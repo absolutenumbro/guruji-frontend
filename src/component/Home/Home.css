@@ -2,7 +2,7 @@
   background-image: url("../../images/cover.jfif");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: 100% 100%; /* Stretches both horizontally & vertically */
   height: 100vmin;
   display: flex;
   flex-direction: column;
@@ -11,6 +11,8 @@
   justify-content: center;
   color: white;
 }
+
+
 
 .banner > h1 {
   margin: 5vmax;

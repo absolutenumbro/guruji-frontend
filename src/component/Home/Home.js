@@ -40,16 +40,11 @@ const Home = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title="Absolute Numbro" />
+          <MetaData title="Absolute Numbero " />
 
           <div className="banner">
-            <p>Welcome to Astro World</p>
-            <h1>DISCOVER POWERFUL ASTROLOGICAL REMEDIES & PRODUCTS</h1>
-            <a href="#container">
-              <button>
-                Scroll <CgMouse />
-              </button>
-            </a>
+
+           
           </div>
 
           <AboutSection />
@@ -68,7 +63,7 @@ const Home = () => {
             </div>
 
             <div className="services-grid">
-              {services && services.slice(0, 5).map((service) => (
+              {services && services.slice(0, 6).map((service) => (
                 <ServiceCard key={service._id} service={service} />
               ))}
             </div>
@@ -80,7 +75,7 @@ const Home = () => {
           <section className="products-preview">
             <h2>Featured Products</h2>
             <div className="container" id="container">
-              {products && products.slice(0, 5).map((product) => (
+              {products && products.slice(0, 6).map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
             </div>

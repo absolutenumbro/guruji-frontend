@@ -87,7 +87,7 @@ const Footer = () => {
         <div className="footer-section">
           {/* Brand Info */}
           <div className="footer-column">
-            <div className="footer-title">Absolute Numbro</div>
+            <div className="footer-title">Absolute Numbero </div>
             <p className="footer-text">
               Providing expert astrology and numerology services to guide you through life's journey.
             </p>
@@ -150,7 +150,7 @@ const Footer = () => {
 
         {/* Bottom Footer */}
         <div className="footer-bottom">
-          © {new Date().getFullYear()} Absolute Numbro. All rights reserved.
+          © {new Date().getFullYear()} Absolute Numbero . All rights reserved.
         </div>
       </footer>
     </>

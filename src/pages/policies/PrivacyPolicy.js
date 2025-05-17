@@ -10,7 +10,7 @@ const PrivacyPolicy = () => {
         <div className="policy-content">
           <div className="policy-section">
             <h2>Effective Date: March 15, 2024</h2>
-            <p>At Absolute Numbro, we value your privacy and ensure your data is protected in accordance with applicable laws.</p>
+            <p>At Absolute Numbero , we value your privacy and ensure your data is protected in accordance with applicable laws.</p>
           </div>
 
           <div className="policy-section">

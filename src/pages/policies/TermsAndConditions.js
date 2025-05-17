@@ -10,7 +10,7 @@ const TermsAndConditions = () => {
         <div className="policy-content">
           <div className="policy-section">
             <h2>Effective Date: May 09, 2025</h2>
-            <p>Welcome to Absolute Numbro! By using our website and services, you agree to be bound by the following terms and conditions. Please read them carefully before proceeding.</p>
+            <p>Welcome to Absolute Numbero ! By using our website and services, you agree to be bound by the following terms and conditions. Please read them carefully before proceeding.</p>
           </div>
 
           <div className="policy-section">
@@ -20,7 +20,7 @@ const TermsAndConditions = () => {
 
           <div className="policy-section">
             <h2>2. Services Offered</h2>
-            <p>Absolute Numbro provides the following services:</p>
+            <p>Absolute Numbero  provides the following services:</p>
             <ul>
               <li>Online Astrology Consultation</li>
               <li>Personalized Numerology Guidance</li>
@@ -62,7 +62,7 @@ const TermsAndConditions = () => {
 
           <div className="policy-section">
             <h2>6. Intellectual Property</h2>
-            <p>All content on this site—text, images, logos, and videos—is the exclusive property of Absolute Numbro. Unauthorized use is strictly prohibited.</p>
+            <p>All content on this site—text, images, logos, and videos—is the exclusive property of Absolute Numbero . Unauthorized use is strictly prohibited.</p>
           </div>
 
           <div className="policy-section">
@@ -80,7 +80,7 @@ const TermsAndConditions = () => {
             <p>Connect with us:</p>
             <ul>
               <li>Instagram: @absolutnumbroastro</li>
-              <li>Facebook: Absolute Numbro Astro Services</li>
+              <li>Facebook: Absolute Numbero  Astro Services</li>
             </ul>
           </div>
 
