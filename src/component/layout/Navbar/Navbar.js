@@ -39,6 +39,18 @@ const Navbar = () => {
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // Prevent scroll when menu or modal is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen || showModal ? "hidden" : "auto";
+  }, [menuOpen, showModal]);
+
+  // Focus modal heading on open
+  useEffect(() => {
+    if (showModal) {
+      document.getElementById("modal-heading")?.focus();
+    }
+  }, [showModal]);
+
   return (
     <>
       <nav className="main-navbar">
@@ -60,7 +72,7 @@ const Navbar = () => {
         {/* Mobile Auth */}
         <div className="navbar-auth-mobile">
           {!token ? (
-            <Link to="/login" onClick={handleMenuToggle}>Login / Register</Link>
+            <Link to="/login"   className="login-register-link" onClick={handleMenuToggle}>Login / Register</Link>
           ) : (
             <div className="navbar-profile-mobile">
               <span onClick={handleDropdownToggle}>
@@ -133,7 +145,7 @@ const Navbar = () => {
             className="modal-content"
             onClick={(e) => e.stopPropagation()}
           >
-            <h2>Event Coming Soon</h2>
+            <h2 id="modal-heading" tabIndex="-1">Event Coming Soon</h2>
             <p>Stay tuned for updates on our exciting upcoming events!</p>
             <button onClick={closeModal} className="modal-close-btn">Close</button>
           </div>
