@@ -308,7 +308,7 @@
 
         .login-register-link {
             color: #888;        
-            margin-top: -700px;
+            padding-top: 10%;
             margin-left: 4%;
             text-decoration: none;     /* Underline hata do */
 
