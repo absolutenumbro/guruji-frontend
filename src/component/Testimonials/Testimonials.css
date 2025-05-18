@@ -3,6 +3,11 @@
   background: linear-gradient(to bottom, #F9F7FA,#F9F7FA );
 }
 
+
+.slick-dots {
+  display: none !important;
+}
+
 .testimonials-section h2 {
   text-align: center;
   color: #222;
@@ -71,4 +76,11 @@
 .testimonial-role {
   color: #888;
   font-size: 0.9rem;
+}
+
+
+@media (max-width: 768px) {
+  .slick-dots {
+    display: none !important;
+  }
 }
