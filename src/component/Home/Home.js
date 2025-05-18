@@ -62,12 +62,12 @@ const Home = () => {
               </p>
             </div>
 
-            <div className="services-grid">
+            <div className="container">
               {services && services.slice(0, 6).map((service) => (
                 <ServiceCard key={service._id} service={service} />
               ))}
             </div>
-
+         <br/>
             <Link to="/services" className="view-more-button">View All Services</Link>
           </section>
 
@@ -78,7 +78,7 @@ const Home = () => {
               {products && products.slice(0, 6).map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
-            </div>
+            </div>   <br/>
             <Link to="/products" className="view-more-button">View All Products</Link>
           </section>
 
