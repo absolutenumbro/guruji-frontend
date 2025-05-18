@@ -11,6 +11,28 @@
     left: 0;
   }
 
+
+
+  .shiftToNeutral {
+    transform: translateX(0%);
+  }
+  
+  .shiftToRight {
+    transform: translateX(100%);
+  }
+  
+  .shiftToNeutralForm {
+    transform: translateX(0%) translateY(-100%);
+  }
+  
+  .shiftToLeft {
+    transform: translateX(-100%);
+  }
+  
+
+
+
+
   .LoginSignUpBox {
     background-color: white;
     width: 25vw;
@@ -166,6 +188,8 @@
     .LoginSignUpBox {
       width: 100vw;
       height: 95vh;
+      background-color: rgb(255, 255, 255);
+      margin-top: 130px;
     }
     .login_signUp_toggle {
       height: 5vmax;
