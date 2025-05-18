@@ -288,8 +288,8 @@
        font-weight: 650;
     
         }
-
-        .navbar-auth-mobile a {
+/* 
+        .navbar-auth-mobile  {
             color: #888;
             font-weight: 500;
             text-decoration: none;
@@ -297,5 +297,5 @@
             transition: color 0.2s;
             margin-bottom: -15%;
             margin-left: 5%;
-            }
+            } */
     } 
