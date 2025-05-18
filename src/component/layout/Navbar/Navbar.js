@@ -72,7 +72,7 @@ const Navbar = () => {
         {/* Mobile Auth */}
         <div className="navbar-auth-mobile">
           {!token ? (
-            <Link to="/login"   className="login-register-link" onClick={handleMenuToggle}>Login / Register</Link>
+            <Link to="/login"   className="login-register-link"     onClick={() => setMenuOpen(false)} >Login / Register</Link>
           ) : (
             <div className="navbar-profile-mobile">
               <span onClick={handleDropdownToggle}>
