@@ -1,17 +1,18 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useAlert } from "react-alert";
 import MetaData from "../MetaData";
 import WhyChooseUs from "../../WhyChooseUs/WhyChooseUs";
 import Testimonials from "../../Testimonials/Testimonials";
-import { createContact } from "../../../actions/contactAction";
+import { createContact, clearErrors } from "../../../actions/contactAction";
 import "./Contact.css";
 import VisionMission from "../../VisionMission/VisionMission";
-
 
 const Contact = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
+
+  const { loading, error, success } = useSelector((state) => state.contacts);
 
   const [contactData, setContactData] = useState({
     name: "",
@@ -23,17 +24,26 @@ const Contact = () => {
 
   const { name, phone, email, subject, message } = contactData;
 
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+    if (success) {
+      alert.success("Message sent successfully!");
+      setContactData({
+        name: "",
+        phone: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
+    }
+  }, [dispatch, alert, error, success]);
+
   const contactSubmit = (e) => {
     e.preventDefault();
     dispatch(createContact(contactData));
-    alert.success("Message sent successfully!");
-    setContactData({
-      name: "",
-      phone: "",
-      email: "",
-      subject: "",
-      message: "",
-    });
   };
 
   const handleChange = (e) => {
@@ -81,7 +91,7 @@ const Contact = () => {
               <div>
                 <h4>Address</h4>
                 <p>SC0 37 Second Floor,&nbsp;Metro City Plaza Market,&nbsp;Lohgarh Road,&nbsp;SAS Nagar,&nbsp;Zirakpur,&nbsp;Punjab-140603</p>
-                </div> 
+              </div> 
             </div>
           </div>
 
@@ -137,8 +147,8 @@ const Contact = () => {
                   required
                 ></textarea>
               </div>
-              <button type="submit" className="submit-btn">
-                Send Message
+              <button type="submit" className="submit-btn" disabled={loading}>
+                {loading ? "Sending..." : "Send Message"}
               </button>
             </form>
           </div>

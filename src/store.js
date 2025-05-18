@@ -35,6 +35,8 @@ import {
   serviceDetailsReducer,
 } from "./reducers/serviceReducer";
 
+import contactReducer from "./reducers/contactReducer";
+
 const reducer = combineReducers({
   products: productsReducer,
   productDetails: productDetailsReducer,
@@ -58,6 +60,7 @@ const reducer = combineReducers({
   newService: newServiceReducer,
   service: serviceReducer,
   serviceDetails: serviceDetailsReducer,
+  contacts: contactReducer,
 });
 
 let initialState = {
