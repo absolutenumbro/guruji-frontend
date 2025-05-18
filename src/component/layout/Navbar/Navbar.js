@@ -69,35 +69,77 @@ const Navbar = () => {
           <Link to="/contact" onClick={handleMenuToggle}>Contact</Link>
         </div>
 
-        {/* Mobile Auth */}
-        <div className="navbar-auth-mobile">
-          {!token ? (
-            <Link to="/login"   className="login-register-link"     onClick={() => setMenuOpen(false)} >Login / Register</Link>
-          ) : (
-            <div className="navbar-profile-mobile">
-              <span onClick={handleDropdownToggle}>
-                <img
-                  className="navbar-avatar"
-                  src={user?.avatar?.url || "/Profile.png"}
-                  alt="Profile"
-                />
-              </span>
-              {dropdownOpen && (
-                <div className="navbar-dropdown-mobile">
-                  <Link to="/account" onClick={handleMenuToggle}>Profile</Link>
-                  <Link to="/cart" onClick={handleMenuToggle}>Add to Cart</Link>
-                  <Link to="/orders" onClick={handleMenuToggle}>Orders</Link>
-                  {user?.role === "admin" && (
-                    <Link to="/admin/dashboard" onClick={handleMenuToggle}>Dashboard</Link>
-                  )}
-                  <span onClick={handleLogout} style={{ cursor: "pointer", padding: "0.7rem 1.2rem" }}>
-                    Logout
-                  </span>
-                </div>
-              )}
-            </div>
+     {/* Mobile Auth */}
+<div className="navbar-auth-mobile">
+  {!token ? (
+    <Link
+      to="/login"
+      className="login-register-link"
+      onClick={() => setMenuOpen(false)}
+    >
+      Login / Register
+    </Link>
+  ) : (
+    <div className="navbar-profile-mobile">
+      <span onClick={handleDropdownToggle}>
+        <img
+          className="navbar-avatar"
+          src={user?.avatar?.url || "/Profile.png"}
+          alt="Profile"
+        />
+      </span>
+      {dropdownOpen && (
+        <div className="navbar-dropdown-mobile">
+          <Link
+            to="/account"
+            onClick={() => {
+              setDropdownOpen(false);
+              setMenuOpen(false);
+            }}
+          >
+            Profile
+          </Link>
+          <Link
+            to="/cart"
+            onClick={() => {
+              setDropdownOpen(false);
+              setMenuOpen(false);
+            }}
+          >
+            Add to Cart
+          </Link>
+          <Link
+            to="/orders"
+            onClick={() => {
+              setDropdownOpen(false);
+              setMenuOpen(false);
+            }}
+          >
+            Orders
+          </Link>
+          {user?.role === "admin" && (
+            <Link
+              to="/admin/dashboard"
+              onClick={() => {
+                setDropdownOpen(false);
+                setMenuOpen(false);
+              }}
+            >
+              Dashboard
+            </Link>
           )}
+          <span
+            onClick={handleLogout}
+            style={{ cursor: "pointer", padding: "0.7rem 1.2rem" }}
+          >
+            Logout
+          </span>
         </div>
+      )}
+    </div>
+  )}
+</div>
+
 
         {/* Desktop Auth */}
         <div className="navbar-auth-desktop">
