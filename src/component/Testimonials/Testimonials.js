@@ -28,7 +28,7 @@ const testimonialsData = [
     name: "Naveen Kumar Singal",
     role: "Crypto Trader",
     image: naveen,
-    text: "Sri Kushaagar Das Ji's mobile numerology helped me achieve career growth. Thank you Absolute Numbero  Astro Services!"
+    text: "Abhay Kumar Sharma mobile numerology helped me achieve career growth. Thank you Absolute Numbero  Astro Services!"
   },
   {
     id: 2,
