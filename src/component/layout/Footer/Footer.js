@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -87,12 +87,12 @@ const Footer = () => {
         <div className="footer-section">
           {/* Brand Info */}
           <div className="footer-column">
-            <div className="footer-title">Absolute Numbero </div>
+            <div className="footer-title">Absolute Numbero</div>
             <p className="footer-text">
               Providing expert astrology and numerology services to guide you through life's journey.
             </p>
             <div>
-              <br/>
+              <br />
               <a
                 href="https://www.facebook.com/people/Absolut-Numbro-Astro-services/61576063048744/"
                 target="_blank"
@@ -109,9 +109,14 @@ const Footer = () => {
               >
                 <FaInstagram />
               </a>
-              <span className="footer-icon">
-                <FaTwitter />
-              </span>
+              <a
+                href="https://www.youtube.com/@AbsolutNumbroAstroservices"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer-icon"
+              >
+                <FaYoutube />
+              </a>
             </div>
           </div>
 
@@ -121,7 +126,6 @@ const Footer = () => {
             <Link to="/" className="footer-link">Home</Link>
             <Link to="/about" className="footer-link">About Us</Link>
             <Link to="/services" className="footer-link">Services</Link>
-            <Link to="/" className="footer-link"></Link>
             <Link to="/contact" className="footer-link">Contact Us</Link>
           </div>
 
@@ -143,14 +147,14 @@ const Footer = () => {
               <span className="contact-icon">✉️</span>info@absolutnumbroastroservices.com
             </p>
             <p className="footer-text">
-              <span className="contact-icon">📍</span>SC0 37 Second Floor, Metro City Plaza Market,Lohgarh Road,SAS Nagar,Zirakpur,Punjab-140603
+              <span className="contact-icon">📍</span>SC0 37 Second Floor, Metro City Plaza Market, Lohgarh Road, SAS Nagar, Zirakpur, Punjab-140603
             </p>
           </div>
         </div>
 
         {/* Bottom Footer */}
         <div className="footer-bottom">
-          © {new Date().getFullYear()} Absolute Numbero . All rights reserved.
+          © {new Date().getFullYear()} Absolute Numbero. All rights reserved.
         </div>
       </footer>
     </>
