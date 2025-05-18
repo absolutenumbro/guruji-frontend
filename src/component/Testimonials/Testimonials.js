@@ -21,14 +21,13 @@ import khushboo from '../../images/555.jpeg';
 import harman from '../../images/666.jpeg';
 import Harish from '../../images/777.jpeg';
 import Shubhash from '../../images/888.jpeg';
-
 const testimonialsData = [
   {
     id: 1,
     name: "Naveen Kumar Singal",
     role: "Crypto Trader",
     image: naveen,
-    text: "Abhay Kumar Sharma mobile numerology helped me achieve career growth. Thank you Absolute Numbero  Astro Services!"
+    text: "Abhay Kumar SharmaGmobile numerology helped me achieve career growth. Thank you Absolute Numbero  Astro Services!"
   },
   {
     id: 2,
@@ -63,7 +62,7 @@ const testimonialsData = [
     name: "Sunil Kumar",
     role: "Wellness Coach",
     image: Sunil,
-    text: "Family harmony returned after following Vastu remedies given by Sri Kushaagar Das Ji."
+    text: "Family harmony returned after following Vastu remedies given by Guruji."
   },
   {
     id: 7,
@@ -112,7 +111,7 @@ const testimonialsData = [
     name: "Manmohan Singh",
     role: "Branch Manager",
     image: manmohan,
-    text: "My transfer issue was resolved smoothly after a detailed horoscope analysis by Guruji."
+    text: "My transfer issue was resolved smoothly after a detailed horoscope analysis byG"
   },
   {
     id: 14,
@@ -126,7 +125,7 @@ const testimonialsData = [
     name: "Harman Singh Aujla",
     role: "Entrepreneur",
     image: harman,
-    text: "Guruji helped me choose an auspicious date and name for my new venture. Results are amazing!"
+    text: "Ghelped me choose an auspicious date and name for my new venture. Results are amazing!"
   },
   {
     id: 16,
@@ -140,7 +139,7 @@ const testimonialsData = [
     name: "Shubhash Chander",
     role: "Police Officer",
     image: Shubhash,
-    text: "Mental peace and clarity returned in my life after a detailed session with Sri Kushaagar Das Ji."
+    text: "Mental peace and clarity returned in my life after a detailed session with Guruji."
   },
 ];
 
