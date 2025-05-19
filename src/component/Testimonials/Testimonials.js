@@ -111,7 +111,7 @@ const testimonialsData = [
     name: "Manmohan Singh",
     role: "Branch Manager",
     image: manmohan,
-    text: "My transfer issue was resolved smoothly after a detailed horoscope analysis byG"
+    text: "My transfer issue was resolved smoothly after a detailed horoscope analysis by Guruji "
   },
   {
     id: 14,

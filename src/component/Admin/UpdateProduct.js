@@ -19,6 +19,13 @@ import { UPDATE_PRODUCT_RESET } from "../../constants/productConstants";
 // ✅ React Router v6 hooks
 import { useParams, useNavigate } from "react-router-dom";
 
+const categories = [
+  "Education eBook",
+  "eBook and Manual Book",
+  "Vastu Product",
+  "Numerology Product"
+];
+
 const UpdateProduct = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -41,16 +48,6 @@ const UpdateProduct = () => {
   const [images, setImages] = useState([]);
   const [oldImages, setOldImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
-
-  const categories = [
-    "Laptop",
-    "Footwear",
-    "Bottom",
-    "Tops",
-    "Attire",
-    "Camera",
-    "SmartPhones",
-  ];
 
   useEffect(() => {
     if (product && product._id !== productId) {
@@ -97,6 +94,7 @@ const UpdateProduct = () => {
     myForm.set("name", name);
     myForm.set("price", price);
     myForm.set("description", description);
+    myForm.set("category", category);
     myForm.set("Stock", Stock);
 
     images.forEach((image) => {
@@ -177,11 +175,12 @@ const UpdateProduct = () => {
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
+                required
               >
                 <option value="">Choose Category</option>
-                {categories.map((cate) => (
-                  <option key={cate} value={cate}>
-                    {cate}
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
                   </option>
                 ))}
               </select>
