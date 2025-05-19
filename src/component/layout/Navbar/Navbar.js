@@ -65,6 +65,7 @@ const Navbar = () => {
           <Link to="/about" onClick={handleMenuToggle}>About Us</Link>
           <Link to="/services" onClick={handleMenuToggle}>Services</Link>
           <Link to="/products" onClick={handleMenuToggle}>Products</Link>
+          <Link to="/numerology"> Calculator</Link>
           <button onClick={openModal} className="event-button">Events</button>
           <Link to="/contact" onClick={handleMenuToggle}>Contact</Link>
         </div>

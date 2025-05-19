@@ -51,6 +51,7 @@ import UpdateService from "./component/Admin/UpdateService";
 import TermsAndConditions from "./pages/policies/TermsAndConditions";
 import PrivacyPolicy from "./pages/policies/PrivacyPolicy";
 import RefundPolicy from "./pages/policies/RefundPolicy";
+import NumerologyCalculator from "./pages/NumerologyCalculator";
 
 // Create a wrapper component to handle protected routes
 // const ProtectedRouteWrapper = ({ children, isAdmin }) => {
@@ -113,6 +114,8 @@ function App() {
         <Route exact path="/terms" element={<TermsAndConditions />} />
         <Route exact path="/privacy" element={<PrivacyPolicy />} />
         <Route exact path="/refund-policy" element={<RefundPolicy />} />
+        <Route path="/numerology" element={<NumerologyCalculator />} />
+
 
         <Route exact path="/account" element={
           <ProtectedRoute>
