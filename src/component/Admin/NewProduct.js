@@ -9,9 +9,17 @@ import DescriptionIcon from "@material-ui/icons/Description";
 import StorageIcon from "@material-ui/icons/Storage";
 import SpellcheckIcon from "@material-ui/icons/Spellcheck";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import CategoryIcon from "@material-ui/icons/Category";
 import SideBar from "./Sidebar";
 import { NEW_PRODUCT_RESET } from "../../constants/productConstants";
 import { useNavigate } from "react-router-dom";
+
+const categories = [
+  "Education eBook",
+  "eBook and Manual Book",
+  "Vastu Product",
+  "Numerology Product"
+];
 
 const NewProduct = () => {
   const dispatch = useDispatch();
@@ -23,6 +31,7 @@ const NewProduct = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(0);
   const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
   const [Stock, setStock] = useState(0);
   const [images, setImages] = useState([]);
   const [imagesPreview, setImagesPreview] = useState([]);
@@ -47,18 +56,11 @@ const NewProduct = () => {
     myForm.set("name", name);
     myForm.set("price", Number(price));
     myForm.set("description", description);
+    myForm.set("category", category);
     myForm.set("Stock", Number(Stock));
 
     images.forEach((image) => {
       myForm.append("images", image);
-    });
-
-    console.log('Submitting product data:', {
-      name,
-      price: Number(price),
-      description,
-      Stock: Number(Stock),
-      images
     });
 
     dispatch(createProduct(myForm));
@@ -127,6 +129,22 @@ const NewProduct = () => {
                 cols="30"
                 rows="1"
               ></textarea>
+            </div>
+
+            <div>
+              <CategoryIcon />
+              <select
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                required
+              >
+                <option value="">Choose Category</option>
+                {categories.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div>
