@@ -22,7 +22,7 @@
   padding: 2vmax;
   justify-content: space-evenly;
   height: 70%;
-  width: 40vh;
+  width: 40%;
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.267);
 }
@@ -142,5 +142,18 @@
   #createServiceBtn {
     font: 300 1.9vmax "Roboto";
     padding: 1.8vmax;
+  }
+
+  .createServiceForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    padding: 2vmax;
+    justify-content: space-evenly;
+    height: 70%;
+    width: 80%;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.267);
   }
 } 

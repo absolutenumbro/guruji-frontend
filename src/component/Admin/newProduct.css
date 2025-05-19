@@ -1,7 +1,7 @@
 .newProductContainer {
   width: 100%;
   box-sizing: border-box;
-  background-color: rgb(221, 221, 221);
+  background-color: rgb(255, 255, 255);
   border-left: 1px solid rgba(0, 0, 0, 0.158);
   display: flex;
   flex-direction: column;
@@ -21,8 +21,8 @@
   padding: 3vmax;
   justify-content: space-evenly;
   height: 70%;
-  width: 40vh;
-  background-color: white;
+  width: 50%;
+  background-color: rgb(255, 255, 255);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.267);
 }
 
@@ -133,5 +133,17 @@
   #createProductBtn {
     font: 300 1.9vmax "Roboto";
     padding: 1.8vmax;
+  }
+  .createProductForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    padding: 3vmax;
+    justify-content: space-evenly;
+    height: 70%;
+    width: 80%;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.267);
   }
 }
