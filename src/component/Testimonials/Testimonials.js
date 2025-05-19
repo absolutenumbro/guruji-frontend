@@ -73,7 +73,7 @@ const testimonialsData = [
   },
   {
     id: 8,
-    name: "Mandeep Singh",
+    name: "Meenu sharma",
     role: "Policy Advisor - LIC",
     image: Mandeep,
     text: "I now feel a strong sense of direction in my career. Numerology changed my perspective completely."
