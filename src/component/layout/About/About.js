@@ -18,10 +18,10 @@ const About = () => {
   return (
     <>
       <div className="about-banner">
-        <h1>About Us</h1>
-        <p>
+        {/* <h1>About Us</h1> */}
+        {/* <p>
           At Absolut Numbro, we blend ancient astrological wisdom with modern insights. 
-        </p>
+        </p> */}
       </div>
       <section className="about-intro">
         <h2>About Us</h2>

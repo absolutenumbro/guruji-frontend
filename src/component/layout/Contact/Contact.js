@@ -55,8 +55,8 @@ const Contact = () => {
       <MetaData title="Contact Us - Astro World" />
       
       <div className="contact-banner">
-        <h1>Contact Us</h1>
-        <p>Get in touch with our expert astrologers</p>
+        {/* <h1>Contact Us</h1>
+        <p>Get in touch with our expert astrologers</p> */}
       </div>
 
       <section className="contact-intro">

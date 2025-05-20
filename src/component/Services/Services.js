@@ -33,8 +33,8 @@ const Services = () => {
           <MetaData title="Services - Astro World" />
           
           <div className="services-banner">
-            <h1>Our Services</h1>
-            <p>Discover our comprehensive range of astrological services</p>
+            {/* <h1>Our Services</h1>
+            <p>Discover our comprehensive range of astrological services</p> */}
           </div>
 
           <section className="services-intro">

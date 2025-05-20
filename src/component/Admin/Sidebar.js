@@ -78,6 +78,12 @@ const Sidebar = () => {
           Messages
         </p>
       </Link>
+      <Link to="/admin/appointments">
+        <p>
+          <MessageIcon />
+          Book Appointment
+        </p>
+      </Link>
     </div>
   );
 };

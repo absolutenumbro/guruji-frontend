@@ -56,8 +56,8 @@ const Products = () => {
           <MetaData title="Products - Astro World" />
           
           <div className="products-banner">
-            <h1>Our Products</h1> 
-            <p>Get our latest Products</p>
+            {/* <h1>Our Products</h1> 
+            <p>Get our latest Products</p> */}
           </div>
 
           <section className="products-intro">
