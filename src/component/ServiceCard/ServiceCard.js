@@ -53,7 +53,7 @@ const ServiceCard = ({ service }) => {
   };
 
   return (
-    <Link style={cardStyle} to={`/service/${service._id}`}>
+    <div style={cardStyle}>
       <img src={service.images[0]?.url} alt={service.name} style={imgStyle} />
       <p style={nameStyle}>{service.name}</p>
 
@@ -66,9 +66,11 @@ const ServiceCard = ({ service }) => {
       <span style={priceStyle}>{`₹${service.price}`}</span>
 
       <div>
-        <span style={buttonStyle}>Book Service</span>
+        <Link to={`/book-appointment?service=${service._id}`} style={buttonStyle}>
+          Book Service
+        </Link>
       </div>
-    </Link>
+    </div>
   );
 };
 

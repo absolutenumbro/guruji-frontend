@@ -37,6 +37,14 @@ import {
 
 import contactReducer from "./reducers/contactReducer";
 
+import {
+  allAppointmentsReducer,
+  appointmentReducer,
+  appointmentDetailsReducer,
+  myAppointmentsReducer,
+  newAppointmentReducer,
+} from "./reducers/appointmentReducer";
+
 const reducer = combineReducers({
   products: productsReducer,
   productDetails: productDetailsReducer,
@@ -61,6 +69,11 @@ const reducer = combineReducers({
   service: serviceReducer,
   serviceDetails: serviceDetailsReducer,
   contacts: contactReducer,
+  newAppointment: newAppointmentReducer,
+  myAppointments: myAppointmentsReducer,
+  allAppointments: allAppointmentsReducer,
+  appointment: appointmentReducer,
+  appointmentDetails: appointmentDetailsReducer,
 });
 
 let initialState = {

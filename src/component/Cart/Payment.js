@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from "react";
-import "./Payment.css";
+import "./payment.css";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useAlert } from "react-alert";

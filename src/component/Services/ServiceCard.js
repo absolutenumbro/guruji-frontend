@@ -9,7 +9,7 @@ const ServiceCard = ({ service }) => {
       <div className="serviceCard__info">
         <p className="serviceCard__name">{service.name}</p>
         <p className="serviceCard__price">{`₹${service.price}`}</p> 
-        <Link to={`/service/${service._id}`} className="serviceCard__btn">
+        <Link to={`/book-appointment?service=${service._id}`} className="serviceCard__btn">
           Book Service
         </Link> 
       </div>
