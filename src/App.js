@@ -45,7 +45,8 @@ import NotFound from "./component/layout/Not Found/NotFound";
 import Services from "./component/Services/Services";
 import ServiceList from "./component/Admin/ServiceList";
 import NewService from "./component/Admin/NewService";
-import ContactList from "./component/Admin/ContactList";
+// import ContactList from "./component/Admin/ContactList";
+import Messages from "./component/Admin/Messages";
 import UpdateService from "./component/Admin/UpdateService";
 import TermsAndConditions from "./pages/policies/TermsAndConditions";
 import PrivacyPolicy from "./pages/policies/PrivacyPolicy";
@@ -224,7 +225,8 @@ function App() {
 
         <Route exact path="/admin/messages" element={
           <ProtectedRoute isAdmin={true}>
-            <ContactList />
+            {/* <ContactList /> */}
+            <Messages />
           </ProtectedRoute>
         } />
 
