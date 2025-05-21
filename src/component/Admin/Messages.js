@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllContacts, deleteContact } from "../../actions/contactAction";
 import { useAlert } from "react-alert";
@@ -11,8 +11,10 @@ import SideBar from "./Sidebar";
 const Messages = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
-
   const { loading, error, contacts } = useSelector((state) => state.contacts);
+
+  const [showModal, setShowModal] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
   useEffect(() => {
     if (error) {
@@ -21,21 +23,30 @@ const Messages = () => {
     dispatch(getAllContacts());
   }, [dispatch, alert, error]);
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this message?")) {
-      dispatch(deleteContact(id))
-        .then(() => {
-          alert.success("Message deleted");
-          dispatch(getAllContacts());
-        })
-        .catch(() => {
-          alert.error("Failed to delete message");
-        });
-    }
+  const confirmDelete = (id) => {
+    setDeleteId(id);
+    setShowModal(true);
   };
 
-  // Sort messages by newest
-  const sortedContacts = contacts ? [...contacts].sort((a, b) => 
+  const handleDeleteConfirmed = () => {
+    dispatch(deleteContact(deleteId))
+      .then(() => {
+        alert.success("Message deleted");
+        dispatch(getAllContacts());
+      })
+      .catch(() => {
+        alert.error("Failed to delete message");
+      });
+    setShowModal(false);
+    setDeleteId(null);
+  };
+
+  const handleCancelDelete = () => {
+    setShowModal(false);
+    setDeleteId(null);
+  };
+
+  const sortedContacts = contacts ? [...contacts].sort((a, b) =>
     new Date(b.createdAt) - new Date(a.createdAt)
   ) : [];
 
@@ -68,7 +79,7 @@ const Messages = () => {
                     </div>
                     <div className="messageActions">
                       <button
-                        onClick={() => handleDelete(contact._id)}
+                        onClick={() => confirmDelete(contact._id)}
                         className="deleteBtn"
                       >
                         <FaTrash style={{ marginRight: "6px" }} />
@@ -82,6 +93,19 @@ const Messages = () => {
           )}
         </div>
       </div>
+
+      {/* Custom Delete Confirmation Modal */}
+      {showModal && (
+        <div className="customModalOverlay">
+          <div className="customModal">
+            <p>Are you sure you want to delete this message?</p>
+            <div className="modalButtons">
+              <button onClick={handleDeleteConfirmed} className="confirmBtn">Yes, Delete</button>
+              <button onClick={handleCancelDelete} className="cancelBtn">Cancel</button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

@@ -17,15 +17,22 @@ const BookAppointment = () => {
   const { loading, error, success } = useSelector((state) => state.newAppointment);
   const { user } = useSelector((state) => state.user);
 
-  const [name, setName] = useState(user ? user.name : "");
-  const [email, setEmail] = useState(user ? user.email : "");
-  const [phone, setPhone] = useState("");
-  const [service, setService] = useState("");
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  // Form state
+  const [formData, setFormData] = useState({
+    name: user ? user.name : "",
+    email: user ? user.email : "",
+    phone: "",
+    service: "",
+    date: "",
+    time: "",
+  });
+
   const [availableSlots, setAvailableSlots] = useState([]);
   const [serviceDetails, setServiceDetails] = useState(null);
+  const [loadingSlots, setLoadingSlots] = useState(false);
+  const [slotsError, setSlotsError] = useState("");
 
+  // Reset form when service changes
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
     const serviceId = searchParams.get('service');
@@ -35,15 +42,19 @@ const BookAppointment = () => {
         try {
           const { data } = await axios.get(`/api/v1/service/${serviceId}`);
           setServiceDetails(data.service);
-          setService(data.service.name);
+          setFormData(prev => ({
+            ...prev,
+            service: data.service.name
+          }));
         } catch (error) {
           console.error("Error fetching service details:", error);
         }
       };
       fetchServiceDetails();
     }
-  }, [location]);
+  }, [location.search]); // Changed dependency to location.search
 
+  // Handle success and error states
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -54,34 +65,70 @@ const BookAppointment = () => {
       alert.success("Appointment Booked Successfully");
       navigate("/appointments/me");
       dispatch({ type: CREATE_APPOINTMENT_RESET });
+      // Reset form after successful booking
+      setFormData({
+        name: user ? user.name : "",
+        email: user ? user.email : "",
+        phone: "",
+        service: "",
+        date: "",
+        time: "",
+      });
+      setAvailableSlots([]);
     }
-  }, [dispatch, alert, error, success, navigate]);
+  }, [dispatch, alert, error, success, navigate, user]);
 
+  // Fetch available slots when date changes
   useEffect(() => {
     const fetchAvailableSlots = async () => {
-      if (date) {
+      if (formData.date) {
         try {
-          const { data } = await axios.get(`/api/v1/appointment/slots?date=${date}`);
+          setLoadingSlots(true);
+          setSlotsError("");
+          const formattedDate = new Date(formData.date).toISOString().split('T')[0];
+          const { data } = await axios.get(`/api/v1/appointment/slots?date=${formattedDate}`);
           setAvailableSlots(data.availableSlots);
         } catch (error) {
           console.error("Error fetching available slots:", error);
+          setSlotsError(error.response?.data?.message || "Error fetching time slots");
+          setAvailableSlots([]);
+        } finally {
+          setLoadingSlots(false);
         }
+      } else {
+        setAvailableSlots([]);
+        setFormData(prev => ({ ...prev, time: "" }));
       }
     };
 
     fetchAvailableSlots();
-  }, [date]);
+  }, [formData.date]);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const appointmentSubmitHandler = (e) => {
     e.preventDefault();
 
+    // Validate form
+    if (!formData.date || !formData.time) {
+      alert.error("Please select both date and time");
+      return;
+    }
+
+    if (!formData.phone) {
+      alert.error("Please enter your phone number");
+      return;
+    }
+
     const appointmentData = {
-      name,
-      email,
-      phone,
-      service,
-      date,
-      time,
+      ...formData,
+      date: new Date(formData.date).toISOString().split('T')[0],
     };
 
     dispatch(createAppointment(appointmentData));
@@ -102,37 +149,40 @@ const BookAppointment = () => {
             <div>
               <input
                 type="text"
+                name="name"
                 placeholder="Name"
                 required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={formData.name}
+                onChange={handleInputChange}
               />
             </div>
 
             <div>
               <input
                 type="email"
+                name="email"
                 placeholder="Email"
                 required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={handleInputChange}
               />
             </div>
 
             <div>
               <input
                 type="tel"
+                name="phone"
                 placeholder="Phone Number"
                 required
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
+                value={formData.phone}
+                onChange={handleInputChange}
               />
             </div>
 
             <div>
               <input
                 type="text"
-                value={service}
+                value={formData.service}
                 readOnly
                 placeholder="Selected Service"
               />
@@ -141,35 +191,45 @@ const BookAppointment = () => {
             <div>
               <input
                 type="date"
+                name="date"
                 required
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                value={formData.date}
+                onChange={handleInputChange}
                 min={new Date().toISOString().split("T")[0]}
               />
             </div>
 
             <div>
               <select
-                value={time}
-                onChange={(e) => setTime(e.target.value)}
+                name="time"
+                value={formData.time}
+                onChange={handleInputChange}
                 required
-                disabled={!date}
+                disabled={!formData.date || loadingSlots}
               >
                 <option value="">Select Time</option>
-                {availableSlots.map((slot) => (
-                  <option key={slot} value={slot}>
-                    {slot}
-                  </option>
-                ))}
+                {loadingSlots ? (
+                  <option value="" disabled>Loading slots...</option>
+                ) : slotsError ? (
+                  <option value="" disabled>{slotsError}</option>
+                ) : availableSlots.length === 0 ? (
+                  <option value="" disabled>No slots available</option>
+                ) : (
+                  availableSlots.map((slot) => (
+                    <option key={slot} value={slot}>
+                      {slot}
+                    </option>
+                  ))
+                )}
               </select>
             </div>
 
             <button
               id="bookAppointmentBtn"
               type="submit"
-              disabled={loading ? true : false}
+              disabled={loading}
             >
-              Book Appointment
+              {loading ? "Booking..." : "Book Appointment"}
             </button>
           </form>
         </div>
