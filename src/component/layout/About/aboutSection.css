@@ -126,11 +126,11 @@
 
 
 .about-banner {
-  background-image: url("../../../images/cover22.jpg");
+  background-image: url("../../../images/about.jpeg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 70vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
