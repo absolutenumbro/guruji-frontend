@@ -14,13 +14,15 @@ import {
   clearErrors,
 } from "../../actions/userAction";
 import Loader from "../layout/Loader/Loader";
+import { useNavigate, useParams } from "react-router-dom"; // ✅ v6 hooks
 
-const UpdateUser = ({ history, match }) => {
+const UpdateUser = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
+  const navigate = useNavigate(); // ✅ navigation hook
+  const { id: userId } = useParams(); // ✅ get route param
 
   const { loading, error, user } = useSelector((state) => state.userDetails);
-
   const {
     loading: updateLoading,
     error: updateError,
@@ -31,16 +33,15 @@ const UpdateUser = ({ history, match }) => {
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
 
-  const userId = match.params.id;
-
   useEffect(() => {
     if (user && user._id !== userId) {
       dispatch(getUserDetails(userId));
-    } else {
+    } else if (user) {
       setName(user.name);
       setEmail(user.email);
       setRole(user.role);
     }
+
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -53,16 +54,15 @@ const UpdateUser = ({ history, match }) => {
 
     if (isUpdated) {
       alert.success("User Updated Successfully");
-      history.push("/admin/users");
+      navigate("/admin/users"); // ✅ replaced history.push
       dispatch({ type: UPDATE_USER_RESET });
     }
-  }, [dispatch, alert, error, history, isUpdated, updateError, user, userId]);
+  }, [dispatch, alert, error, updateError, isUpdated, user, userId, navigate]);
 
   const updateUserSubmitHandler = (e) => {
     e.preventDefault();
 
     const myForm = new FormData();
-
     myForm.set("name", name);
     myForm.set("email", email);
     myForm.set("role", role);
@@ -118,9 +118,7 @@ const UpdateUser = ({ history, match }) => {
               <Button
                 id="createProductBtn"
                 type="submit"
-                disabled={
-                  updateLoading ? true : false || role === "" ? true : false
-                }
+                disabled={updateLoading || role === ""}
               >
                 Update
               </Button>
