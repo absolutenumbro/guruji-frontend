@@ -71,61 +71,77 @@ const NumerologyCalculator = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h2 style={styles.heading}>🔮 Numerology Calculator 🔮</h2>
-      <form onSubmit={handleCalculate} style={styles.form}>
-        <input
-          type="text"
-          placeholder="Full Name"
-          value={fullName}
-          onChange={e => setFullName(e.target.value)}
-          style={styles.input}
-        />
-        <input
-          type="text"
-          placeholder="Phone Number"
-          value={phoneNumber}
-          onChange={e => setPhoneNumber(e.target.value)}
-          style={styles.input}
-        />
-        <input
-          type="date"
-          value={dob}
-          onChange={e => setDob(e.target.value)}
-          style={styles.input}
-        />
-        <select value={gender} onChange={e => setGender(e.target.value)} style={styles.input}>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-        <button type="submit" style={styles.button}>Calculate</button>
-      </form>
-
-      <div style={styles.grid}>
-        {grid.flat().map((val, idx) => (
-          <div key={idx} style={{ ...styles.cell, animationDelay: `${idx * 0.1}s` }}>{val}</div>
-        ))}
-      </div>
-
-      <div style={styles.results}>
-        <p><strong>Driver:</strong> {results.driver}</p>
-        <p><strong>Conductor:</strong> {results.conductor}</p>
-        <p><strong>KUA:</strong> {results.kua}</p>
+    <div style={styles.outerContainer}>
+      <div style={styles.container}>
+        <h2 style={styles.heading}>🔮 Numerology Calculator 🔮</h2>
+        <form onSubmit={handleCalculate} style={styles.form}>
+          <input
+            type="text"
+            placeholder="Full Name"
+            value={fullName}
+            onChange={e => setFullName(e.target.value)}
+            style={styles.input}
+          />
+          <input
+            type="text"
+            placeholder="Phone Number"
+            value={phoneNumber}
+            onChange={e => setPhoneNumber(e.target.value)}
+            style={styles.input}
+          />
+          <input
+            type="date"
+            value={dob}
+            onChange={e => setDob(e.target.value)}
+            style={styles.input}
+          />
+          <select value={gender} onChange={e => setGender(e.target.value)} style={styles.input}>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+          <button type="submit" style={styles.button}>Calculate</button>
+        </form>
+  
+        <div style={styles.grid}>
+          {grid.flat().map((val, idx) => (
+            <div key={idx} style={{ ...styles.cell, animationDelay: `${idx * 0.1}s` }}>{val}</div>
+          ))}
+        </div>
+  
+        <div style={styles.results}>
+          <p><strong>Driver:</strong> {results.driver}</p>
+          <p><strong>Conductor:</strong> {results.conductor}</p>
+          <p><strong>KUA:</strong> {results.kua}</p>
+        </div>
       </div>
     </div>
   );
+  
 };
 
 const styles = {
-  container: {
-    maxWidth: 700,
-    margin: '30px auto',
-    padding: '30px',
-    background: 'linear-gradient(to right, #e0eafc, #cfdef3)',
-    borderRadius: '12px',
-    boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
-    fontFamily: 'Arial, sans-serif',
-  },
+container: {
+  maxWidth: 700,
+  margin: '30px auto',
+  padding: '30px',
+  backgroundImage: 'url("https://www.transparenttextures.com/patterns/gplay.png")',
+  backgroundColor: '#e0eafc',
+  backgroundSize: 'cover',
+  backgroundRepeat: 'repeat',
+  borderRadius: '12px',
+  boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
+  fontFamily: 'Arial, sans-serif',
+},
+outerContainer: {
+  minHeight: '100vh',
+  width: '100%',
+  backgroundImage: 'url("https://www.transparenttextures.com/patterns/gplay.png")',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  padding: '20px',
+},
+ 
   heading: {
     fontSize: '2rem',
     marginBottom: 20,
