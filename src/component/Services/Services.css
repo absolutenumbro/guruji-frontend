@@ -97,11 +97,11 @@
 }
 
 .services-banner {
-  background-image: url("../../images/cover22.jpg");
+  background-image: url("../../images/service.jpeg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 70vh;
+  height: 80vh;
   display: flex;
   flex-direction: column;
   text-align: center;

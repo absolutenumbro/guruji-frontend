@@ -94,7 +94,7 @@ const Footer = () => {
             <div>
               <br />
               <a
-                href="https://www.facebook.com/people/Absolut-Numbro-Astro-services/61576063048744/"
+                href="https://www.facebook.com/profile.php?id=61576338429989"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-icon"
@@ -102,7 +102,7 @@ const Footer = () => {
                 <FaFacebookF />
               </a>
               <a
-                href="https://www.instagram.com/absolutnumbroastro?igsh=bmZ0dTZxemtxeWt2"
+                href="https://www.instagram.com/absolutenumberoastroservice/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-icon"
@@ -110,7 +110,7 @@ const Footer = () => {
                 <FaInstagram />
               </a>
               <a
-                href="https://www.youtube.com/@AbsolutNumbroAstroservices"
+                href="https://www.youtube.com/@absolutenumberoastroservice"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="footer-icon"

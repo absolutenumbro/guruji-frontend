@@ -80,36 +80,36 @@ const About = () => {
         title: "Lucky Mobile Number",
         description:
           "Get your personalized lucky mobile number for better harmony and success.",
-        price: "₹501",
+        price: "₹2300",
       },
       {
         title: "Career Analysis",
         description:
           "Personalized career insights based on astrology and numerology.",
-        price: "₹501",
+        price: "₹2300",
       },
       {
         title: "Marriage Issue",
         description:
           "Astrological solutions for resolving marriage-related problems.",
-        price: "₹2100",
+        price: "₹2300",
       },
       {
         title: "Vastu Consultant",
         description: "Get expert vastu guidance for home or office harmony.",
-        price: "₹5100",
+        price: "₹15000",
       },
       {
         title: "Lucky Car Number",
         description:
           "Find your lucky vehicle number to bring prosperity.",
-        price: "₹500",
+        price: "₹2300",
       },
       {
         title: "Full Business Consultation",
         description:
           "In-depth business advice using astrological calculations.",
-        price: "₹11000",
+        price: "₹23000",
       },
     ].map((service, index) => (
       <div

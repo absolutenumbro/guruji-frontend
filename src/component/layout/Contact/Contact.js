@@ -83,7 +83,7 @@ const Contact = () => {
               <i className="fas fa-envelope"></i>
               <div>
                 <h4>Email</h4>
-                <p>info@absolutnumbroastroservices.com</p>
+                <p>info@absolutenumberoastroservice.com</p>
               </div>
             </div>
             <div className="info-item">
