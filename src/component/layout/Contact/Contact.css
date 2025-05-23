@@ -28,7 +28,7 @@
 }
 
 .contact-banner {
-  background-image: url("../../../images/cover.jfif");
+  background-image: url("../../../images/cover22.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -331,5 +331,12 @@
 
   .info-item h4 {
     font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-banner {
+    height: 35vh;
+    padding: 2rem 0;
   }
 }
