@@ -123,6 +123,8 @@
   }
 }
 
+
+
 .about-banner {
   background-image: url("../../../images/cover22.jpg");
   background-position: center;
@@ -234,5 +236,22 @@
   }
   .about-description p {
     font-size: 1rem;
+  }
+}
+
+
+
+
+/* .about-banner  */
+
+
+@media screen and (max-width: 500px) {
+  .about-banner {
+    background-image: url("../../../images/4.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100%;
   }
 }

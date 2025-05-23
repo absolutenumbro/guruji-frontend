@@ -146,3 +146,18 @@
     font-size: 1rem;
   }
 }
+/* Mobile background image */
+@media screen and (max-width: 600px) {
+  .banner {
+    background-image: url("../../images/mobile.jpeg");
+    background-size: cover; /* optionally you can use 100% 100% if needed */
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 80vh;
+    width: 100%;
+  }
+
+  .services-description-modern p {
+    font-size: 1rem;
+  }
+}
