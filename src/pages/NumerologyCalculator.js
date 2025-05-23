@@ -1,152 +1,147 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
+
+const loshuGridMap = {
+  1: [2, 1], // bottom center
+  2: [0, 2], // top right
+  3: [1, 0], // middle left
+  4: [0, 0], // top left
+  5: [1, 1], // center
+  6: [2, 2], // bottom right
+  7: [1, 2], // middle right
+  8: [2, 0], // bottom left
+  9: [0, 1], // top center
+};
+
+const createEmptyGrid = () => Array(3).fill().map(() => Array(3).fill(''));
+
+const reduceToSingleDigit = (num) => {
+  while (num > 9) {
+    num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+  }
+  return num;
+};
 
 const NumerologyCalculator = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [dob, setDob] = useState("");
-  const [result, setResult] = useState(null);
+  const [dob, setDob] = useState('');
+  const [gender, setGender] = useState('Male');
+  const [grid, setGrid] = useState(createEmptyGrid());
+  const [results, setResults] = useState({ driver: '', conductor: '', kua: '' });
 
-  const nameToNumber = (name) => {
-    const letters = name.toUpperCase().replace(/[^A-Z]/g, "");
-    const values = {
-      A:1, B:2, C:3, D:4, E:5, F:8, G:3, H:5, I:1,
-      J:1, K:2, L:3, M:4, N:5, O:7, P:8, Q:1, R:2,
-      S:3, T:4, U:6, V:6, W:6, X:5, Y:1, Z:7
-    };
-    let total = 0;
-    for (let char of letters) {
-      total += values[char] || 0;
-    }
-    return reduceToSingleDigit(total);
-  };
-
-  const dobToNumber = (dob) => {
-    const digits = dob.replace(/[^0-9]/g, "").split("").map(Number);
-    const total = digits.reduce((sum, num) => sum + num, 0);
-    return reduceToSingleDigit(total);
-  };
-
-  const reduceToSingleDigit = (num) => {
-    while (num > 9 && num !== 11 && num !== 22 && num !== 33) {
-      num = num.toString().split("").reduce((sum, d) => sum + Number(d), 0);
-    }
-    return num;
-  };
-
-  const getMeaning = (num) => {
-    const meanings = {
-      1: "Leader, independent and ambitious",
-      2: "Diplomatic, sensitive and cooperative",
-      3: "Creative, social and optimistic",
-      4: "Practical, reliable and grounded",
-      5: "Adventurous, energetic and curious",
-      6: "Responsible, loving and protective",
-      7: "Spiritual, introspective and analytical",
-      8: "Ambitious, powerful and materialistic",
-      9: "Compassionate, humanitarian and wise",
-      11: "Visionary, intuitive and inspirational",
-      22: "Master builder, practical visionary",
-      33: "Master teacher, loving and selfless"
-    };
-    return meanings[num] || "Unique vibration";
-  };
-
-  const handleSubmit = (e) => {
+  const handleCalculate = (e) => {
     e.preventDefault();
-    const nameNumber = nameToNumber(firstName + lastName);
-    const dobNumber = dobToNumber(dob);
-    setResult({
-      nameNumber,
-      nameMeaning: getMeaning(nameNumber),
-      dobNumber,
-      dobMeaning: getMeaning(dobNumber),
+    if (!dob) return;
+
+    const [yyyy, mm, dd] = dob.split('-');
+    const day = parseInt(dd);
+
+    // Driver
+    const driver = reduceToSingleDigit(day);
+
+    // Conductor
+    const totalDOB = dd + mm + yyyy;
+    const conductor = reduceToSingleDigit(
+      totalDOB.split('').reduce((sum, digit) => sum + parseInt(digit), 0)
+    );
+
+    // KUA
+    const yearSum = reduceToSingleDigit(
+      yyyy.split('').reduce((sum, digit) => sum + parseInt(digit), 0)
+    );
+    let kua;
+    if (gender === 'Male') kua = reduceToSingleDigit(11 - yearSum);
+    else kua = reduceToSingleDigit(yearSum + 4);
+
+    // Grid
+    const digitCounts = {};
+    totalDOB.split('').forEach(d => {
+      digitCounts[d] = (digitCounts[d] || '') + d;
     });
+    digitCounts[driver] = (digitCounts[driver] || '') + driver;
+    digitCounts[conductor] = (digitCounts[conductor] || '') + conductor;
+    digitCounts[kua] = (digitCounts[kua] || '') + kua;
+
+    const newGrid = createEmptyGrid();
+    Object.entries(digitCounts).forEach(([digit, str]) => {
+      const num = parseInt(digit);
+      if (loshuGridMap[num]) {
+        const [row, col] = loshuGridMap[num];
+        newGrid[row][col] += str;
+      }
+    });
+
+    setGrid(newGrid);
+    setResults({ driver, conductor, kua });
   };
 
   return (
     <div style={styles.container}>
-      <h1>Numerology Calculator</h1>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <input
-          type="text"
-          placeholder="First Name"
-          value={firstName}
-          onChange={(e) => setFirstName(e.target.value)}
-          required
-          style={styles.input}
-        />
-        <input
-          type="text"
-          placeholder="Last Name"
-          value={lastName}
-          onChange={(e) => setLastName(e.target.value)}
-          required
-          style={styles.input}
-        />
-        <input
-          type="date"
-          value={dob}
-          onChange={(e) => setDob(e.target.value)}
-          required
-          style={styles.input}
-        />
+      <h2>Numerology Calculator</h2>
+      <form onSubmit={handleCalculate} style={styles.form}>
+        <input type="date" value={dob} onChange={e => setDob(e.target.value)} style={styles.input} />
+        <select value={gender} onChange={e => setGender(e.target.value)} style={styles.input}>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
         <button type="submit" style={styles.button}>Calculate</button>
       </form>
-      {result && (
-        <div style={styles.result}>
-          <h3>Results:</h3>
-          <p><strong>Name Number:</strong> {result.nameNumber} - {result.nameMeaning}</p>
-          <p><strong>DOB Number:</strong> {result.dobNumber} - {result.dobMeaning}</p>
-        </div>
-      )}
+
+      <div style={styles.grid}>
+        {grid.flat().map((val, idx) => (
+          <div key={idx} style={styles.cell}>{val}</div>
+        ))}
+      </div>
+
+      <div style={styles.results}>
+        <p><strong>Driver:</strong> {results.driver}</p>
+        <p><strong>Conductor:</strong> {results.conductor}</p>
+        <p><strong>KUA:</strong> {results.kua}</p>
+      </div>
     </div>
   );
 };
 
 const styles = {
   container: {
-    fontFamily: "Arial, sans-serif",
-    background: "linear-gradient(to right, #283048, #859398)",
-    color: "white",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    minHeight: "100vh",
-    padding: "40px",
+    maxWidth: 600,
+    margin: '0 auto',
+    padding: 20,
+    textAlign: 'center',
   },
   form: {
-    background: "rgba(255, 255, 255, 0.1)",
-    padding: "20px",
-    marginTop: "30px",
-    borderRadius: "10px",
-    boxShadow: "0 0 10px rgba(0,0,0,0.3)",
-    maxWidth: "400px",
-    width: "100%",
+    marginBottom: 20,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 10,
   },
   input: {
-    margin: "10px 0",
-    padding: "10px",
-    width: "100%",
-    border: "none",
-    borderRadius: "5px",
+    padding: 10,
+    fontSize: 16,
   },
   button: {
-    backgroundColor: "#4CAF50",
-    color: "white",
-    padding: "10px",
-    border: "none",
-    borderRadius: "5px",
-    cursor: "pointer",
-    width: "100%",
+    padding: 10,
+    backgroundColor: '#007bff',
+    color: 'white',
+    border: 'none',
+    fontSize: 16,
+    cursor: 'pointer'
   },
-  result: {
-    marginTop: "20px",
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
-    padding: "15px",
-    borderRadius: "10px",
-    maxWidth: "400px",
-    width: "100%",
+  grid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, 1fr)',
+    gap: 10,
+    marginTop: 20
   },
+  cell: {
+    border: '1px solid #ccc',
+    padding: 20,
+    fontSize: 18,
+    fontWeight: 'bold',
+    backgroundColor: '#f9f9f9'
+  },
+  results: {
+    marginTop: 20,
+    fontSize: 16
+  }
 };
 
 export default NumerologyCalculator;

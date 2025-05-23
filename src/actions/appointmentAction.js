@@ -124,7 +124,13 @@ export const deleteAppointment = (id) => async (dispatch) => {
   try {
     dispatch({ type: DELETE_APPOINTMENT_REQUEST });
 
-    const { data } = await axios.delete(`/api/v1/admin/appointment/${id}`);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const { data } = await axios.delete(`/api/v1/admin/appointment/${id}`, config);
 
     dispatch({
       type: DELETE_APPOINTMENT_SUCCESS,
@@ -133,7 +139,7 @@ export const deleteAppointment = (id) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: DELETE_APPOINTMENT_FAIL,
-      payload: error.response.data.message,
+      payload: error.response?.data?.message || "Error deleting appointment",
     });
   }
 };
