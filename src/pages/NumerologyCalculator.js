@@ -157,7 +157,7 @@ const styles = {
   grid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 1fr)',
-    gap: 12,
+    // gap: 1,
     marginTop: 20,
   },
   cell: {
