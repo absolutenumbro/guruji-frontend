@@ -22,6 +22,8 @@ const reduceToSingleDigit = (num) => {
 };
 
 const NumerologyCalculator = () => {
+  const [fullName, setFullName] = useState('');
+  const [phone, setPhone] = useState('');
   const [dob, setDob] = useState('');
   const [gender, setGender] = useState('Male');
   const [grid, setGrid] = useState(createEmptyGrid());
@@ -77,8 +79,31 @@ const NumerologyCalculator = () => {
     <div style={styles.container}>
       <h2>Numerology Calculator</h2>
       <form onSubmit={handleCalculate} style={styles.form}>
-        <input type="date" value={dob} onChange={e => setDob(e.target.value)} style={styles.input} />
-        <select value={gender} onChange={e => setGender(e.target.value)} style={styles.input}>
+        <input
+          type="text"
+          placeholder="Full Name"
+          value={fullName}
+          onChange={e => setFullName(e.target.value)}
+          style={styles.input}
+        />
+        <input
+          type="text"
+          placeholder="Phone Number"
+          value={phone}
+          onChange={e => setPhone(e.target.value)}
+          style={styles.input}
+        />
+        <input
+          type="date"
+          value={dob}
+          onChange={e => setDob(e.target.value)}
+          style={styles.input}
+        />
+        <select
+          value={gender}
+          onChange={e => setGender(e.target.value)}
+          style={styles.input}
+        >
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
@@ -95,6 +120,8 @@ const NumerologyCalculator = () => {
         <p><strong>Driver:</strong> {results.driver}</p>
         <p><strong>Conductor:</strong> {results.conductor}</p>
         <p><strong>KUA:</strong> {results.kua}</p>
+        <p><strong>Name:</strong> {fullName}</p>
+        <p><strong>Phone:</strong> {phone}</p>
       </div>
     </div>
   );
