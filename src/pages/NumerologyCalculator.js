@@ -101,47 +101,55 @@ const NumerologyCalculator = () => {
           </select>
           <button type="submit" style={styles.button}>Calculate</button>
         </form>
-  
+
         <div style={styles.grid}>
           {grid.flat().map((val, idx) => (
             <div key={idx} style={{ ...styles.cell, animationDelay: `${idx * 0.1}s` }}>{val}</div>
           ))}
         </div>
-  
-        <div style={styles.results}>
-          <p><strong>Driver:</strong> {results.driver}</p>
-          <p><strong>Conductor:</strong> {results.conductor}</p>
-          <p><strong>KUA:</strong> {results.kua}</p>
+
+        {/* Horizontal Results Row */}
+        <div style={styles.resultRow}>
+          <div style={styles.resultBox}>
+            <strong>Driver</strong>
+            <div>{results.driver}</div>
+          </div>
+          <div style={styles.resultBox}>
+            <strong>Conductor</strong>
+            <div>{results.conductor}</div>
+          </div>
+          <div style={styles.resultBox}>
+            <strong>KUA</strong>
+            <div>{results.kua}</div>
+          </div>
         </div>
       </div>
     </div>
   );
-  
 };
 
 const styles = {
-container: {
-  maxWidth: 700,
-  margin: '30px auto',
-  padding: '30px',
-  backgroundImage: 'url("https://www.transparenttextures.com/patterns/gplay.png")',
-  backgroundColor: '#e0eafc',
-  backgroundSize: 'cover',
-  backgroundRepeat: 'repeat',
-  borderRadius: '12px',
-  boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
-  fontFamily: 'Arial, sans-serif',
-},
-outerContainer: {
-  minHeight: '100vh',
-  width: '100%',
-  backgroundImage: 'url("https://www.transparenttextures.com/patterns/gplay.png")',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  padding: '20px',
-},
- 
+  outerContainer: {
+    minHeight: '100vh',
+    width: '100%',
+    backgroundImage: 'url("https://www.transparenttextures.com/patterns/gplay.png")',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '20px',
+  },
+  container: {
+    maxWidth: 700,
+    margin: '30px auto',
+    padding: '30px',
+    backgroundImage: 'url("https://www.transparenttextures.com/patterns/gplay.png")',
+    backgroundColor: '#e0eafc',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'repeat',
+    borderRadius: '12px',
+    boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
+    fontFamily: 'Arial, sans-serif',
+  },
   heading: {
     fontSize: '2rem',
     marginBottom: 20,
@@ -173,7 +181,6 @@ outerContainer: {
   grid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 1fr)',
-    // gap: 1,
     marginTop: 20,
   },
   cell: {
@@ -187,19 +194,26 @@ outerContainer: {
     animation: 'fadeIn 0.5s ease forwards',
     opacity: 0,
   },
-  results: {
+  resultRow: {
     marginTop: 30,
-    fontSize: 18,
-    color: '#444',
-    backgroundColor: '#f7f7f7',
-    padding: 20,
-    borderRadius: '8px',
-    boxShadow: '0 5px 10px rgba(0,0,0,0.05)'
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '20px',
+  },
+  resultBox: {
+    flex: 1,
+    textAlign: 'center',
+    padding: '15px',
+    border: '2px solid #aaa',
+    borderRadius: '10px',
+    backgroundColor: '#ffffff',
+    boxShadow: '0 5px 10px rgba(0,0,0,0.05)',
+    fontSize: '18px',
+    color: '#333',
   },
 };
 
-export default NumerologyCalculator;
-
+// CSS animation added to document head
 const styleSheet = document.createElement("style");
 styleSheet.innerText = `
   @keyframes fadeIn {
@@ -208,3 +222,5 @@ styleSheet.innerText = `
   }
 `;
 document.head.appendChild(styleSheet);
+
+export default NumerologyCalculator;
