@@ -108,8 +108,15 @@
   }
 }
 
+@media (max-width: 600px) {
+  .products-banner {
+    height: 35vh;
+    padding: 2rem 0;
+  }
+}
+
 .products-banner {
-  background-image: url("../../images/cover44.jpg");
+  background-image: url("../../images/cover22.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
