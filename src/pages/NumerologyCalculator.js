@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 
 const loshuGridMap = {
-  1: [2, 1], // bottom center
-  2: [0, 2], // top right
-  3: [1, 0], // middle left
-  4: [0, 0], // top left
-  5: [1, 1], // center
-  6: [2, 2], // bottom right
-  7: [1, 2], // middle right
-  8: [2, 0], // bottom left
-  9: [0, 1], // top center
+  1: [2, 1],
+  2: [0, 2],
+  3: [1, 0],
+  4: [0, 0],
+  5: [1, 1],
+  6: [2, 2],
+  7: [1, 2],
+  8: [2, 0],
+  9: [0, 1],
 };
 
 const createEmptyGrid = () => Array(3).fill().map(() => Array(3).fill(''));
@@ -22,10 +22,10 @@ const reduceToSingleDigit = (num) => {
 };
 
 const NumerologyCalculator = () => {
-  const [fullName, setFullName] = useState('');
-  const [phone, setPhone] = useState('');
   const [dob, setDob] = useState('');
   const [gender, setGender] = useState('Male');
+  const [fullName, setFullName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
   const [grid, setGrid] = useState(createEmptyGrid());
   const [results, setResults] = useState({ driver: '', conductor: '', kua: '' });
 
@@ -36,16 +36,12 @@ const NumerologyCalculator = () => {
     const [yyyy, mm, dd] = dob.split('-');
     const day = parseInt(dd);
 
-    // Driver
     const driver = reduceToSingleDigit(day);
-
-    // Conductor
     const totalDOB = dd + mm + yyyy;
     const conductor = reduceToSingleDigit(
       totalDOB.split('').reduce((sum, digit) => sum + parseInt(digit), 0)
     );
 
-    // KUA
     const yearSum = reduceToSingleDigit(
       yyyy.split('').reduce((sum, digit) => sum + parseInt(digit), 0)
     );
@@ -53,7 +49,6 @@ const NumerologyCalculator = () => {
     if (gender === 'Male') kua = reduceToSingleDigit(11 - yearSum);
     else kua = reduceToSingleDigit(yearSum + 4);
 
-    // Grid
     const digitCounts = {};
     totalDOB.split('').forEach(d => {
       digitCounts[d] = (digitCounts[d] || '') + d;
@@ -77,7 +72,7 @@ const NumerologyCalculator = () => {
 
   return (
     <div style={styles.container}>
-      <h2>Numerology Calculator</h2>
+      <h2 style={styles.heading}>🔮 Numerology Calculator 🔮</h2>
       <form onSubmit={handleCalculate} style={styles.form}>
         <input
           type="text"
@@ -89,8 +84,8 @@ const NumerologyCalculator = () => {
         <input
           type="text"
           placeholder="Phone Number"
-          value={phone}
-          onChange={e => setPhone(e.target.value)}
+          value={phoneNumber}
+          onChange={e => setPhoneNumber(e.target.value)}
           style={styles.input}
         />
         <input
@@ -99,11 +94,7 @@ const NumerologyCalculator = () => {
           onChange={e => setDob(e.target.value)}
           style={styles.input}
         />
-        <select
-          value={gender}
-          onChange={e => setGender(e.target.value)}
-          style={styles.input}
-        >
+        <select value={gender} onChange={e => setGender(e.target.value)} style={styles.input}>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
         </select>
@@ -112,7 +103,7 @@ const NumerologyCalculator = () => {
 
       <div style={styles.grid}>
         {grid.flat().map((val, idx) => (
-          <div key={idx} style={styles.cell}>{val}</div>
+          <div key={idx} style={{ ...styles.cell, animationDelay: `${idx * 0.1}s` }}>{val}</div>
         ))}
       </div>
 
@@ -120,8 +111,6 @@ const NumerologyCalculator = () => {
         <p><strong>Driver:</strong> {results.driver}</p>
         <p><strong>Conductor:</strong> {results.conductor}</p>
         <p><strong>KUA:</strong> {results.kua}</p>
-        <p><strong>Name:</strong> {fullName}</p>
-        <p><strong>Phone:</strong> {phone}</p>
       </div>
     </div>
   );
@@ -129,46 +118,77 @@ const NumerologyCalculator = () => {
 
 const styles = {
   container: {
-    maxWidth: 600,
-    margin: '0 auto',
-    padding: 20,
-    textAlign: 'center',
+    maxWidth: 700,
+    margin: '30px auto',
+    padding: '30px',
+    background: 'linear-gradient(to right, #e0eafc, #cfdef3)',
+    borderRadius: '12px',
+    boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
+    fontFamily: 'Arial, sans-serif',
+  },
+  heading: {
+    fontSize: '2rem',
+    marginBottom: 20,
+    color: '#333'
   },
   form: {
-    marginBottom: 20,
+    marginBottom: 30,
     display: 'flex',
     flexDirection: 'column',
-    gap: 10,
+    gap: 15,
   },
   input: {
-    padding: 10,
+    padding: '12px 15px',
     fontSize: 16,
+    borderRadius: '6px',
+    border: '1px solid #ccc',
+    transition: 'border 0.3s ease',
   },
   button: {
-    padding: 10,
-    backgroundColor: '#007bff',
+    padding: '12px 20px',
+    background: 'linear-gradient(90deg, #667eea, #764ba2)',
     color: 'white',
-    border: 'none',
     fontSize: 16,
-    cursor: 'pointer'
+    border: 'none',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    transition: 'background 0.3s ease',
   },
   grid: {
     display: 'grid',
     gridTemplateColumns: 'repeat(3, 1fr)',
-    gap: 10,
-    marginTop: 20
+    gap: 12,
+    marginTop: 20,
   },
   cell: {
-    border: '1px solid #ccc',
-    padding: 20,
-    fontSize: 18,
+    border: '2px solid #888',
+    padding: 25,
+    fontSize: 20,
     fontWeight: 'bold',
-    backgroundColor: '#f9f9f9'
+    backgroundColor: '#fff',
+    borderRadius: '8px',
+    boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
+    animation: 'fadeIn 0.5s ease forwards',
+    opacity: 0,
   },
   results: {
-    marginTop: 20,
-    fontSize: 16
-  }
+    marginTop: 30,
+    fontSize: 18,
+    color: '#444',
+    backgroundColor: '#f7f7f7',
+    padding: 20,
+    borderRadius: '8px',
+    boxShadow: '0 5px 10px rgba(0,0,0,0.05)'
+  },
 };
 
 export default NumerologyCalculator;
+
+const styleSheet = document.createElement("style");
+styleSheet.innerText = `
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+`;
+document.head.appendChild(styleSheet);
