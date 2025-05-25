@@ -230,6 +230,7 @@ const styles = {
   },
   container: {
     maxWidth: 700,
+    width: '100%',
     margin: '30px auto',
     padding: '30px',
     backgroundImage: 'url("https://www.transparenttextures.com/patterns/gplay.png")',
