@@ -31,8 +31,8 @@ const ConfirmOrder = () => {
     (acc, item) => acc + item.quantity * item.price,
     0
   );
-
-  const shippingCharges = subtotal > 1000 ? 0 : 200;
+// yha par ham shipping charges dal sakta hai 0: 0(yha par shipping charges 0 hai)
+  const shippingCharges = subtotal > 1000 ? 0 : 0;
 
   const tax = subtotal * 0.18;
 
