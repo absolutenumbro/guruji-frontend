@@ -23,6 +23,18 @@ const planetMap = {
   9: 'Mars',
 };
 
+const calculatePhoneNumberValue = (phone) => {
+  const digits = phone.replace(/\D/g, ''); // Remove any non-numeric characters
+  const total = digits.split('').reduce((sum, d) => sum + parseInt(d), 0);
+  const reduced = reduceToSingleDigit(total);
+  return {
+    total,
+    reduced,
+    planet: planetMap[reduced] || 'Unknown',
+  };
+};
+
+
 const reduceToSingleDigit = (num) => {
   while (num > 9) {
     num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
@@ -81,7 +93,8 @@ const NumerologyCalculator = () => {
     driver: '',
     conductor: '',
     kua: '',
-    nameNumber: null,
+    nameNumber: null,  phoneNumberValue: null, // 👈 Add this
+
   });
 
   const handleCalculate = (e) => {
@@ -122,6 +135,8 @@ const NumerologyCalculator = () => {
     });
 
     const nameNumResult = calculateNameNumber(fullName);
+    const phoneResult = calculatePhoneNumberValue(phoneNumber);
+
 
     setGrid(newGrid);
     setResults({
@@ -129,6 +144,8 @@ const NumerologyCalculator = () => {
       conductor,
       kua,
       nameNumber: nameNumResult,
+      phoneNumberValue: phoneResult, // 👈 Add this
+
     });
   };
 
@@ -187,6 +204,12 @@ const NumerologyCalculator = () => {
           <strong>Name</strong>
           <div>
                {results.nameNumber?.reduced} <br/> {results.nameNumber?.planet}
+            </div>
+          </div>
+          <div style={styles.resultBox}>
+            <strong>Phone Number</strong>
+            <div>
+              {results.phoneNumberValue?.reduced} 
             </div>
           </div>
         </div>
