@@ -40,7 +40,7 @@ const Home = () => {
         <Loader />
       ) : (
         <Fragment>
-          <MetaData title="Absolute Numbero " />
+          <MetaData title="Absolute astro service " />
 
           <div className="banner">
 
