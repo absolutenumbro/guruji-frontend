@@ -23,8 +23,15 @@ const planetMap = {
   9: 'Mars',
 };
 
+const reduceToSingleDigit = (num) => {
+  while (num > 9) {
+    num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+  }
+  return num;
+};
+
 const calculatePhoneNumberValue = (phone) => {
-  const digits = phone.replace(/\D/g, ''); // Remove any non-numeric characters
+  const digits = phone.replace(/\D/g, '');
   const total = digits.split('').reduce((sum, d) => sum + parseInt(d), 0);
   const reduced = reduceToSingleDigit(total);
   return {
@@ -34,18 +41,9 @@ const calculatePhoneNumberValue = (phone) => {
   };
 };
 
-
-const reduceToSingleDigit = (num) => {
-  while (num > 9) {
-    num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
-  }
-  return num;
-};
-
 const calculateNameNumber = (name) => {
   const upperName = name.toUpperCase().replace(/[^A-Z\s]/g, '');
   const parts = upperName.split(' ').filter(Boolean);
-
   let total = 0;
 
   for (let part of parts) {
@@ -93,8 +91,8 @@ const NumerologyCalculator = () => {
     driver: '',
     conductor: '',
     kua: '',
-    nameNumber: null,  phoneNumberValue: null, // 👈 Add this
-
+    nameNumber: null,
+    phoneNumberValue: null,
   });
 
   const handleCalculate = (e) => {
@@ -103,7 +101,6 @@ const NumerologyCalculator = () => {
 
     const [yyyy, mm, dd] = dob.split('-');
     const day = parseInt(dd);
-
     const driver = reduceToSingleDigit(day);
     const totalDOB = dd + mm + yyyy;
     const conductor = reduceToSingleDigit(
@@ -137,15 +134,13 @@ const NumerologyCalculator = () => {
     const nameNumResult = calculateNameNumber(fullName);
     const phoneResult = calculatePhoneNumberValue(phoneNumber);
 
-
     setGrid(newGrid);
     setResults({
       driver,
       conductor,
       kua,
       nameNumber: nameNumResult,
-      phoneNumberValue: phoneResult, // 👈 Add this
-
+      phoneNumberValue: phoneResult,
     });
   };
 
@@ -181,38 +176,45 @@ const NumerologyCalculator = () => {
           <button type="submit" style={styles.button}>Calculate</button>
         </form>
 
-        <div style={styles.grid}>
-          {grid.flat().map((val, idx) => (
-            <div key={idx} style={{ ...styles.cell, animationDelay: `${idx * 0.1}s` }}>{val}</div>
-          ))}
-        </div>
+        <>
+          <div style={styles.grid}>
+            {grid.map((row, rowIndex) =>
+              row.map((val, colIndex) => (
+                <div
+                  key={`${rowIndex}-${colIndex}`}
+                  style={{ ...styles.cell, animationDelay: `${(rowIndex * 3 + colIndex) * 0.1}s` }}
+                >
+                  {val}
+                </div>
+              ))
+            )}
+          </div>
 
-        <div style={styles.resultRow}>
-          <div style={styles.resultBox}>
-            <strong>Driver</strong>
-            <div>{results.driver}</div>
-          </div>
-          <div style={styles.resultBox}>
-            <strong>Conductor</strong>
-            <div>{results.conductor}</div>
-          </div>
-          <div style={styles.resultBox}>
-            <strong>KUA</strong>
-            <div>{results.kua}</div>
-          </div>
-          <div style={styles.resultBox}>
-          <strong>Name</strong>
-          <div>
-               {results.nameNumber?.reduced} <br/> {results.nameNumber?.planet}
+          <div style={styles.resultGrid}>
+            <div style={styles.resultBox}>
+              <strong>Driver</strong>
+              <div>{results.driver}</div>
+            </div>
+            <div style={styles.resultBox}>
+              <strong>Conductor</strong>
+              <div>{results.conductor}</div>
+            </div>
+            <div style={styles.resultBox}>
+              <strong>KUA</strong>
+              <div>{results.kua}</div>
+            </div>
+            <div style={styles.resultBox}>
+              <strong>Name</strong>
+              <div>
+                {results.nameNumber?.reduced}<br />{results.nameNumber?.planet}
+              </div>
+            </div>
+            <div style={styles.resultBox}>
+              <strong>Phone Number</strong>
+              <div>{results.phoneNumberValue?.reduced}</div>
             </div>
           </div>
-          <div style={styles.resultBox}>
-            <strong>Phone Number</strong>
-            <div>
-              {results.phoneNumberValue?.reduced} 
-            </div>
-          </div>
-        </div>
+        </>
       </div>
     </div>
   );
@@ -285,11 +287,11 @@ const styles = {
     animation: 'fadeIn 0.5s ease forwards',
     opacity: 0,
   },
-  resultRow: {
-    marginTop: 30,
-    display: 'flex',
-    justifyContent: 'space-between',
+  resultGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
     gap: '20px',
+    marginTop: 30,
   },
   resultBox: {
     flex: 1,
@@ -304,7 +306,7 @@ const styles = {
   },
 };
 
-// Inject CSS for animation
+// Inject fadeIn animation
 const styleSheet = document.createElement("style");
 styleSheet.innerText = `
   @keyframes fadeIn {
@@ -313,6 +315,5 @@ styleSheet.innerText = `
   }
 `;
 document.head.appendChild(styleSheet);
-
 
 export default NumerologyCalculator;
