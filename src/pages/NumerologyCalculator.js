@@ -1,5 +1,62 @@
 import React, { useState } from 'react';
 
+const nameNumerologyMap = {
+  1: ['A', 'I', 'J', 'Q', 'Y'],
+  2: ['B', 'K', 'R'],
+  3: ['C', 'G', 'L', 'S'],
+  4: ['D', 'M', 'T'],
+  5: ['E', 'H', 'N', 'X'],
+  6: ['U', 'V', 'W'],
+  7: ['O', 'Z'],
+  8: ['F', 'P'],
+};
+
+const planetMap = {
+  1: 'Sun',
+  2: 'Moon',
+  3: 'Jupiter',
+  4: 'Rahu',
+  5: 'Mercury',
+  6: 'Venus',
+  7: 'Ketu',
+  8: 'Saturn',
+  9: 'Mars',
+};
+
+const reduceToSingleDigit = (num) => {
+  while (num > 9) {
+    num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
+  }
+  return num;
+};
+
+const calculateNameNumber = (name) => {
+  const upperName = name.toUpperCase().replace(/[^A-Z\s]/g, '');
+  const parts = upperName.split(' ').filter(Boolean);
+
+  let total = 0;
+
+  for (let part of parts) {
+    let partTotal = 0;
+    for (let char of part) {
+      for (let [num, letters] of Object.entries(nameNumerologyMap)) {
+        if (letters.includes(char)) {
+          partTotal += parseInt(num);
+          break;
+        }
+      }
+    }
+    total += partTotal;
+  }
+
+  const reduced = reduceToSingleDigit(total);
+  return {
+    total,
+    reduced,
+    planet: planetMap[reduced] || 'Unknown',
+  };
+};
+
 const loshuGridMap = {
   1: [2, 1],
   2: [0, 2],
@@ -14,20 +71,18 @@ const loshuGridMap = {
 
 const createEmptyGrid = () => Array(3).fill().map(() => Array(3).fill(''));
 
-const reduceToSingleDigit = (num) => {
-  while (num > 9) {
-    num = num.toString().split('').reduce((a, b) => a + parseInt(b), 0);
-  }
-  return num;
-};
-
 const NumerologyCalculator = () => {
   const [dob, setDob] = useState('');
   const [gender, setGender] = useState('Male');
   const [fullName, setFullName] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [grid, setGrid] = useState(createEmptyGrid());
-  const [results, setResults] = useState({ driver: '', conductor: '', kua: '' });
+  const [results, setResults] = useState({
+    driver: '',
+    conductor: '',
+    kua: '',
+    nameNumber: null,
+  });
 
   const handleCalculate = (e) => {
     e.preventDefault();
@@ -66,8 +121,15 @@ const NumerologyCalculator = () => {
       }
     });
 
+    const nameNumResult = calculateNameNumber(fullName);
+
     setGrid(newGrid);
-    setResults({ driver, conductor, kua });
+    setResults({
+      driver,
+      conductor,
+      kua,
+      nameNumber: nameNumResult,
+    });
   };
 
   return (
@@ -108,7 +170,6 @@ const NumerologyCalculator = () => {
           ))}
         </div>
 
-        {/* Horizontal Results Row */}
         <div style={styles.resultRow}>
           <div style={styles.resultBox}>
             <strong>Driver</strong>
@@ -121,6 +182,12 @@ const NumerologyCalculator = () => {
           <div style={styles.resultBox}>
             <strong>KUA</strong>
             <div>{results.kua}</div>
+          </div>
+          <div style={styles.resultBox}>
+          <strong>Name</strong>
+          <div>
+               {results.nameNumber?.reduced} <br/> {results.nameNumber?.planet}
+            </div>
           </div>
         </div>
       </div>
@@ -153,7 +220,7 @@ const styles = {
   heading: {
     fontSize: '2rem',
     marginBottom: 20,
-    color: '#333'
+    color: '#333',
   },
   form: {
     marginBottom: 30,
@@ -213,7 +280,7 @@ const styles = {
   },
 };
 
-// CSS animation added to document head
+// Inject CSS for animation
 const styleSheet = document.createElement("style");
 styleSheet.innerText = `
   @keyframes fadeIn {
