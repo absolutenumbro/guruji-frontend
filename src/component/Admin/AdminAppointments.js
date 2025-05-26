@@ -6,22 +6,16 @@ import MetaData from "../layout/MetaData";
 import SideBar from "./Sidebar";
 import { DataGrid } from "@material-ui/data-grid";
 import { Button } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
   getAllAppointments,
   deleteAppointment,
-  updateAppointment,
 } from "../../actions/appointmentAction";
 import {
   DELETE_APPOINTMENT_RESET,
-  UPDATE_APPOINTMENT_RESET,
 } from "../../constants/appointmentConstants";
+import { clearErrors } from "../../actions/userAction";
 import "./AdminAppointments.css";
-import {
-
-  clearErrors
-} from "../../actions/userAction";
 
 const AdminAppointments = () => {
   const dispatch = useDispatch();
@@ -30,14 +24,9 @@ const AdminAppointments = () => {
 
   const { error, appointments } = useSelector((state) => state.allAppointments);
   const { error: deleteError, isDeleted } = useSelector((state) => state.appointment);
-  const { error: updateError, isUpdated } = useSelector((state) => state.appointment);
 
   const deleteAppointmentHandler = (id) => {
     dispatch(deleteAppointment(id));
-  };
-
-  const updateAppointmentHandler = (id, status) => {
-    dispatch(updateAppointment(id, { status }));
   };
 
   useEffect(() => {
@@ -57,18 +46,8 @@ const AdminAppointments = () => {
       dispatch({ type: DELETE_APPOINTMENT_RESET });
     }
 
-    if (updateError) {
-      alert.error(updateError);
-      dispatch(clearErrors());
-    }
-
-    if (isUpdated) {
-      alert.success("Appointment Updated Successfully");
-      dispatch({ type: UPDATE_APPOINTMENT_RESET });
-    }
-
     dispatch(getAllAppointments());
-  }, [dispatch, alert, error, deleteError, isDeleted, updateError, isUpdated, navigate]);
+  }, [dispatch, alert, error, deleteError, isDeleted, navigate]);
 
   const columns = [
     { field: "id", headerName: "Appointment ID", minWidth: 200, flex: 0.5 },
@@ -127,11 +106,8 @@ const AdminAppointments = () => {
       headerName: "Payment",
       minWidth: 120,
       flex: 0.3,
-      cellClassName: (params) => {
-        return params.getValue(params.id, "paymentStatus") === "Paid"
-          ? "greenColor"
-          : "redColor";
-      },
+      cellClassName: () => "greenColor", // Always green
+      valueGetter: () => "Paid", // Always show "Paid"
     },
     {
       field: "actions",
@@ -143,17 +119,6 @@ const AdminAppointments = () => {
       renderCell: (params) => {
         return (
           <Fragment>
-            <Button
-              onClick={() =>
-                updateAppointmentHandler(
-                  params.getValue(params.id, "id"),
-                  "Confirmed"
-                )
-              }
-            >
-              <EditIcon />
-            </Button>
-
             <Button
               onClick={() =>
                 deleteAppointmentHandler(params.getValue(params.id, "id"))
@@ -180,7 +145,7 @@ const AdminAppointments = () => {
         date: item.date,
         time: item.time,
         status: item.status,
-        paymentStatus: item.paymentStatus,
+        paymentStatus: "Paid", // Always "Paid"
       });
     });
 
@@ -207,4 +172,4 @@ const AdminAppointments = () => {
   );
 };
 
-export default AdminAppointments; 
+export default AdminAppointments;
