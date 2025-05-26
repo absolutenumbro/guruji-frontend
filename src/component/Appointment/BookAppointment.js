@@ -112,6 +112,50 @@ const BookAppointment = () => {
     }));
   };
 
+  const proceedToPayment = async () => {
+    try {
+      const { data } = await axios.post('/api/v1/payment/create-order', {
+        amount: serviceDetails.price * 1,
+        currency: "INR",  
+      });
+
+      const options = {
+        key: process.env.REACT_APP_RAZORPAY_KEY_ID,
+        amount: data.order.amount,
+        currency: data.order.currency,
+        name: "Guruji Services",
+        description: `Appointment for ${formData.service}`,
+        order_id: data.order.id,
+        handler: function (response) {
+          const appointmentData = {
+            ...formData,
+            date: new Date(formData.date).toISOString().split('T')[0],
+            paymentInfo: {
+              id: response.razorpay_payment_id,
+              status: "succeeded",
+              type: "Razorpay"
+            }
+          };
+          dispatch(createAppointment(appointmentData));
+        },
+        prefill: {
+          name: formData.name,
+          email: formData.email,
+          contact: formData.phone
+        },
+        theme: {
+          color: "#3399cc"
+        }
+      };
+
+      const rzp1 = new window.Razorpay(options);
+      rzp1.open();
+    } catch (error) {
+      alert.error("Error initializing payment");
+      console.error("Payment initialization error:", error);
+    }
+  };
+
   const appointmentSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -126,12 +170,8 @@ const BookAppointment = () => {
       return;
     }
 
-    const appointmentData = {
-      ...formData,
-      date: new Date(formData.date).toISOString().split('T')[0],
-    };
-
-    dispatch(createAppointment(appointmentData));
+    // Initialize Razorpay payment
+    proceedToPayment();
   };
 
   return (
@@ -140,6 +180,11 @@ const BookAppointment = () => {
       <div className="bookAppointmentContainer">
         <div className="bookAppointmentBox">
           <h2 className="bookAppointmentHeading">Book Your Appointment</h2>
+          {serviceDetails && (
+            <div className="servicePrice">
+              <p>Service Price: ₹{serviceDetails.price}</p>
+            </div>
+          )}
 
           <form
             className="bookAppointmentForm"
@@ -229,7 +274,7 @@ const BookAppointment = () => {
               type="submit"
               disabled={loading}
             >
-              {loading ? "Booking..." : "Book Appointment"}
+              {loading ? "Processing..." : "Proceed to Payment"}
             </button>
           </form>
         </div>
