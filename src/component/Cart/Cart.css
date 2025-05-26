@@ -17,7 +17,7 @@
 }
 .emptyCart > a {
   background-color: rgb(51, 51, 51);
-  color: white;
+  color: rgb(255, 255, 255);
   border: none;
   padding: 1vmax 3vmax;
   cursor: pointer;
@@ -34,7 +34,7 @@
   width: 90%;
   box-sizing: border-box;
   margin: auto;
-  color: white;
+  color: rgb(255, 255, 255);
   display: grid;
   grid-template-columns: 4fr 1fr 1fr;
   font: 300 0.7vmax "Roboto";

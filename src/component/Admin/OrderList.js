@@ -1,8 +1,10 @@
+// Admin wala orders
+
 import React, { Fragment, useEffect } from "react";
 import { DataGrid } from "@material-ui/data-grid";
 import "./productList.css";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // ✅ useNavigate for React Router v6
 import { useAlert } from "react-alert";
 import { Button } from "@material-ui/core";
 import MetaData from "../layout/MetaData";
@@ -16,13 +18,12 @@ import {
 } from "../../actions/orderAction";
 import { DELETE_ORDER_RESET } from "../../constants/orderConstants";
 
-const OrderList = ({ history }) => {
+const OrderList = () => {
   const dispatch = useDispatch();
-
   const alert = useAlert();
+  const navigate = useNavigate(); // ✅ useNavigate instead of history
 
   const { error, orders } = useSelector((state) => state.allOrders);
-
   const { error: deleteError, isDeleted } = useSelector((state) => state.order);
 
   const deleteOrderHandler = (id) => {
@@ -42,16 +43,15 @@ const OrderList = ({ history }) => {
 
     if (isDeleted) {
       alert.success("Order Deleted Successfully");
-      history.push("/admin/orders");
+      navigate("/admin/orders"); // ✅ replaced history.push
       dispatch({ type: DELETE_ORDER_RESET });
     }
 
     dispatch(getAllOrders());
-  }, [dispatch, alert, error, deleteError, history, isDeleted]);
+  }, [dispatch, alert, error, deleteError, isDeleted, navigate]); // ✅ included navigate
 
   const columns = [
     { field: "id", headerName: "Order ID", minWidth: 300, flex: 1 },
-
     {
       field: "status",
       headerName: "Status",
@@ -70,7 +70,6 @@ const OrderList = ({ history }) => {
       minWidth: 150,
       flex: 0.4,
     },
-
     {
       field: "amount",
       headerName: "Amount",
@@ -78,7 +77,40 @@ const OrderList = ({ history }) => {
       minWidth: 270,
       flex: 0.5,
     },
-
+    {
+      field: "products",
+      headerName: "Products",
+      minWidth: 300,
+      flex: 0.7,
+      renderCell: (params) => {
+        return (
+          <div>
+            {params.getValue(params.id, "products").map((item, index) => (
+              <div key={index}>
+                {item.name} (Qty: {item.quantity})
+              </div>
+            ))}
+          </div>
+        );    
+      },
+    },
+    {
+      field: "shippingAddress",
+      headerName: "Shipping Address",
+      minWidth: 300,
+      flex: 0.7,
+      renderCell: (params) => {
+        const address = params.getValue(params.id, "shippingAddress");
+        return (
+          <div>
+            <div>{address.address}</div>
+            <div>{address.city}, {address.state}</div>
+            <div>{address.country} - {address.pinCode}</div>
+            <div>Phone: {address.phoneNo}</div>
+          </div>
+        );
+      },
+    },
     {
       field: "actions",
       flex: 0.3,
@@ -89,10 +121,9 @@ const OrderList = ({ history }) => {
       renderCell: (params) => {
         return (
           <Fragment>
-            <Link to={`/admin/order/${params.getValue(params.id, "id")}`}>
+            {/* <Link to={`/admin/order/${params.getValue(params.id, "id")}`}>
               <EditIcon />
-            </Link>
-
+            </Link> */}
             <Button
               onClick={() =>
                 deleteOrderHandler(params.getValue(params.id, "id"))
@@ -115,18 +146,18 @@ const OrderList = ({ history }) => {
         itemsQty: item.orderItems.length,
         amount: item.totalPrice,
         status: item.orderStatus,
+        products: item.orderItems,
+        shippingAddress: item.shippingInfo,
       });
     });
 
   return (
     <Fragment>
       <MetaData title={`ALL ORDERS - Admin`} />
-
       <div className="dashboard">
         <SideBar />
         <div className="productListContainer">
           <h1 id="productListHeading">ALL ORDERS</h1>
-
           <DataGrid
             rows={rows}
             columns={columns}
