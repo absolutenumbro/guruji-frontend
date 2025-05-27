@@ -66,9 +66,9 @@ const ServiceCard = ({ service }) => {
       <span style={priceStyle}>{`₹${service.price}`}</span>
 
       <div>
-        <Link to={`/book-appointment?service=${service._id}`} style={buttonStyle}>
-          Book Service
-        </Link>
+      <ServiceCard key={service._id} service={service} />
+      Book Service
+      
       </div>
     </div>
   );
