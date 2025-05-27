@@ -164,6 +164,10 @@ const BookAppointment = () => {
             }
           };
           dispatch(createAppointment(appointmentData));
+            // ✅ Ye line add karo:
+  navigate("/"); // user ko homepage pe le jaayega
+  alert.success("Payment Successful! Redirecting to homepage...");
+
         },
         prefill: {
           name: formData.name,
@@ -185,6 +189,14 @@ const BookAppointment = () => {
 
   const appointmentSubmitHandler = (e) => {
     e.preventDefault();
+
+
+      // 🚨 Check if user is logged in
+  if (!user) {
+    alert.error("Please login first to book an appointment");
+    navigate("/login?redirect=book-appointment"); // optional: redirect back after login
+    return;
+  }
 
     // Validate form
     if (!formData.date || !formData.time) {
