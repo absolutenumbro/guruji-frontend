@@ -31,6 +31,28 @@ const BookAppointment = () => {
   const [serviceDetails, setServiceDetails] = useState(null);
   const [loadingSlots, setLoadingSlots] = useState(false);
   const [slotsError, setSlotsError] = useState("");
+  const [isRazorpayLoaded, setIsRazorpayLoaded] = useState(false);
+
+  // Load Razorpay script
+  useEffect(() => {
+    const loadRazorpay = () => {
+      return new Promise((resolve) => {
+        const script = document.createElement("script");
+        script.src = "https://checkout.razorpay.com/v1/checkout.js";
+        script.onload = () => {
+          setIsRazorpayLoaded(true);
+          resolve();
+        };
+        script.onerror = () => {
+          alert.error("Failed to load Razorpay");
+          resolve();
+        };
+        document.body.appendChild(script);
+      });
+    };
+
+    loadRazorpay();
+  }, [alert]);
 
   // Reset form when service changes
   useEffect(() => {
@@ -52,7 +74,7 @@ const BookAppointment = () => {
       };
       fetchServiceDetails();
     }
-  }, [location.search]); // Changed dependency to location.search
+  }, [location.search]);
 
   // Handle success and error states
   useEffect(() => {
@@ -65,7 +87,6 @@ const BookAppointment = () => {
       alert.success("Appointment Booked Successfully");
       navigate("/appointments/me");
       dispatch({ type: CREATE_APPOINTMENT_RESET });
-      // Reset form after successful booking
       setFormData({
         name: user ? user.name : "",
         email: user ? user.email : "",
@@ -113,10 +134,16 @@ const BookAppointment = () => {
   };
 
   const proceedToPayment = async () => {
+    if (!isRazorpayLoaded) {
+      alert.error("Payment system is not ready. Please try again in a moment.");
+      return;
+    }
+
     try {
       const { data } = await axios.post('/api/v1/payment/create-order', {
         amount: serviceDetails.price * 1,
-        currency: "INR",  
+        currency: "INR",
+        type: "appointment"
       });
 
       const options = {
@@ -272,9 +299,9 @@ const BookAppointment = () => {
             <button
               id="bookAppointmentBtn"
               type="submit"
-              disabled={loading}
+              disabled={loading || !isRazorpayLoaded}
             >
-              {loading ? "Processing..." : "Proceed to Payment"}
+              {loading ? "Processing..." : !isRazorpayLoaded ? "Loading Payment..." : "Proceed to Payment"}
             </button>
           </form>
         </div>
